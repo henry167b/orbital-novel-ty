@@ -45,12 +45,12 @@ function RememberMe() {
   const [checked, setChecked] = useState(false);
 
   return (
-    <View style={{flexDirection: 'row', alignItems: 'baseline', justifyContent: 'flex-start'}}>
-      {/* <Checkbox.Android
+    <View style={{flexDirection: 'row', alignItems: 'baseline', justifyContent: 'flex-start', gap: 10, width: '100%'}}>
+      {<Checkbox
         status={checked ? 'checked' : 'unchecked'}
         onPress={() => {setChecked(!checked)}}
 
-      /> */}
+      />}
       <Text variant='bodyLarge'>Remember me</Text>
     </View>
     
