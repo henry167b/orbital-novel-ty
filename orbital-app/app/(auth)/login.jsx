@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Surface, Text, TextInput, Checkbox, Button } from 'react-native-paper';
+import { useAuth } from "../../contexts/auth";
 
 function UsernameEntry() {
   const [text, setText] = useState("");
@@ -37,10 +38,17 @@ function PasswordEntry() {
 }
 
 function LoginButton() {
+  const { signIn } = useAuth();
+
   return (
-    <Button mode='contained-tonal' contentStyle={styles.loginButton}>
+    <Button 
+      mode='contained' 
+      contentStyle={styles.loginButton}
+      onPress={() => signIn()}
+    >
       Sign In
     </Button>
+    
   );
 }
 
@@ -48,11 +56,10 @@ function RememberMe() {
   const [checked, setChecked] = useState(false);
 
   return (
-    <View style={{flexDirection: 'row', alignItems: 'baseline', justifyContent: 'flex-start', gap: 10, width: '100%'}}>
+    <View style={{flexDirection: 'row', alignItems: 'baseline', justifyContent: 'center', gap: 10, width: '100%'}}>
       {<Checkbox
         status={checked ? 'checked' : 'unchecked'}
         onPress={() => {setChecked(!checked)}}
-
       />}
       <Text variant='bodyLarge'>Remember me</Text>
     </View>
@@ -73,7 +80,7 @@ function LoginContainer() {
   );
 }
 
-export function Login() {
+export default function Login() {
   return (
     <SafeAreaProvider>
 			<SafeAreaView style={styles.container}>
