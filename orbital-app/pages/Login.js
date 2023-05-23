@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { Surface, Text, TextInput, Checkbox, Button, PaperProvider } from 'react-native-paper';
+import { Surface, Text, TextInput, Checkbox, Button } from 'react-native-paper';
 
 function UsernameEntry() {
   const [text, setText] = useState("");
@@ -26,7 +26,10 @@ function PasswordEntry() {
     <View style={{width: '100%'}}>
       <Text variant='titleMedium' style={{alignItems: 'flex-start'}}>Password</Text>
       <TextInput
+        secureTextEntry
         mode='outlined'
+        value={text}
+        onChangeText={setText}
         style={styles.textInput}
       />
     </View>
@@ -70,15 +73,14 @@ function LoginContainer() {
   );
 }
 
-export default function App() {
+export function Login() {
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <Text variant='displayMedium' style={{padding: 50}}>Novel-ty</Text>
-        <LoginContainer />
-      </SafeAreaView>
-    </SafeAreaProvider>
-    
+			<SafeAreaView style={styles.container}>
+				<Text variant='displayMedium' style={{padding: 50}}>Novel-ty</Text>
+				<LoginContainer />
+			</SafeAreaView>
+	</SafeAreaProvider>
   );
 }
 
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#BFBFBF',
     alignItems: 'center',
-    justifyContent: 'start',
+    justifyContent: 'ce',
     paddingTop: 25,
     paddingBottom: 25
   },
