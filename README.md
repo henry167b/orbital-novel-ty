@@ -37,11 +37,15 @@ The Mobile application will have a database for users to input and store the boo
 Features to be completed by the mid of June:
 
 Allow users to add the books they are interested in borrowing from NLB into a “wishlist”
+
 Display all NLB libraries and add relevant information to each library i.e. the books from the user’s “wishlist” that the library currently has available, the real-time crowd level, the distance to user and the events currently ongoing at the library
+
 Allow users to sort the libraries based on the different parameters above, depending on what the user wants to do
 
 Features to be completed by the mid of July:
 
 Allow users to track their current loan list and receive notifications when the loan period is over
+
 Allow users to log in to their NLB account on an in app web-page to use NLB’s seat booking function
+
 Provide recommended books based on the “wishlist” that are also available at each library with machine learning
