@@ -1,5 +1,3 @@
-# test
-
 Team Name:
 
 Novel-ty
