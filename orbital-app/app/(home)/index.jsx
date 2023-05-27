@@ -48,6 +48,7 @@ function Events() {
 }
 
 function BookSeat() {
+
   return (
     <Pressable>
       <Surface style={styles.function}>
