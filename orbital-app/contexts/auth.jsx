@@ -22,15 +22,23 @@ function useProtectedRoute(user) {
 }
 
 export function AuthProvider(props) {
-    const [user, setAuth] = useState(null);
+    const [user, setUser] = useState(null);
+    const [password, setPassword] = useState(null);
     useProtectedRoute(user);
 
     return (
       <AuthContext.Provider
         value={{
-          signIn: () => setAuth({}),
-          signOut: () => setAuth(null),
-          user, }}>
+          signIn: (user, password) => { 
+            setUser(user);
+            setPassword(password)
+            },
+          signOut: () => { 
+            setUser(null);
+            setPassword(null)
+            },
+          user,
+          password }}>
           {props.children}
       </ AuthContext.Provider>
     );
