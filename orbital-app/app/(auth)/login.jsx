@@ -86,7 +86,7 @@ export default function Login() {
         <Text variant='displayMedium' style={{padding: 50}}>Novel-ty</Text>
 				<LoginContainer />
       </Surface>	
-      <NLBLogin />
+      {/* <NLBLogin /> */}
     </SafeAreaProvider>
     
   );
