@@ -10,7 +10,7 @@ function LoginContainer() {
   const [password, setPassword] = useState("");
   const { signIn } = useAuth();
   const handleSubmit = () => {
-
+    
     signIn(user, password);
     
   }
@@ -64,15 +64,16 @@ function RememberMe() {
   );
 }
 
-function NLBLogin() {
+function NLBLogin(user, password) {
   const injectedLogin = `
-    document.getElementById('username').value="ibnu265";
-    document.getElementById('password').value="poohpanda26";
-    document.getElementsByName('submit')[0].click();
+    document.getElementById('username').value="` + user + `";
+    document.getElementById('password').value="`+ password + `";
+    // document.getElementsByName('submit')[0].click();
     true;
   `;
   return (
     <WebView
+      style={{flex: 1}} //change to 0
       source={{ uri: 'https://www.nlb.gov.sg/mylibrary' }}
       injectedJavaScript={injectedLogin} />
   );
@@ -81,11 +82,11 @@ function NLBLogin() {
 export default function Login() {
   return (
     <SafeAreaProvider>
-      <View style={styles.container}>
+      <Surface style={styles.container}>
         <Text variant='displayMedium' style={{padding: 50}}>Novel-ty</Text>
 				<LoginContainer />
-      </View>	
-      <NLBLogin style={{flex: 0}} />
+      </Surface>	
+      <NLBLogin />
     </SafeAreaProvider>
     
   );
@@ -93,11 +94,11 @@ export default function Login() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, //change to flex 10
     backgroundColor: '#BFBFBF',
     alignItems: 'center',
     paddingTop: 25,
-    paddingBottom: 25
+    paddingBottom: 25 //change to 350
   },
   loginContainer: {
     alignItems: 'center',
