@@ -29,7 +29,7 @@ export function AuthProvider(props) {
     return (
       <AuthContext.Provider
         value={{
-          signIn: (user, password) => { 
+          signIn: (user, password) => {
             setUser(user);
             setPassword(password)
             },
