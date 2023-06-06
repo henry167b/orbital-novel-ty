@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Appbar, Text, Button, Surface } from "react-native-paper";
 import { useAuth } from "../../contexts/auth";
+import { Link, Stack } from "expo-router";
 
 function HomeBar() {
   return (
@@ -19,7 +20,8 @@ function Content() {
   return (
     <View style={styles.content}>
       <Events />
-      <Functions />
+      <FunctionsFirstRow />
+      <FunctionsSecondRow />
       <Button mode="contained" onPress={() => signOut()}>Sign out</Button>
     </View>
   );
@@ -47,38 +49,70 @@ function Events() {
   );
 }
 
-function BookSeat() {
-
+function LoanList() {
   return (
-    <Pressable>
-      <Surface style={styles.function}>
-        <Text variant="titleMedium">Book a seat</Text>
-      </Surface>
-    </Pressable>
+    <Link href="/loanlist" asChild>
+      <Pressable>
+        <Surface style={styles.function}>
+          <Text style={styles.functionText} variant="titleMedium">Loan List</Text>
+        </Surface>
+      </Pressable>
+    </Link>
   );
 }
 
 function FindBook() {
   return (
+    <Link href="/findabook" asChild>
+      <Pressable>
+        <Surface style={styles.function}>
+          <Text style={styles.functionText} variant="titleMedium">Find a book</Text>
+        </Surface>
+      </Pressable>
+    </Link>
+    
+  );
+}
+
+function BookSeat() {
+  return (
     <Pressable>
       <Surface style={styles.function}>
-        <Text variant="titleMedium">Find a book</Text>
+        <Text style={styles.functionText} variant="titleMedium">Book a seat</Text>
       </Surface>
     </Pressable>
   );
 }
 
-function Functions() {
+function WishList() {
+  return (
+    <Pressable>
+      <Surface style={styles.function}>
+        <Text style={styles.functionText} variant="titleMedium">Wishlist</Text>
+      </Surface>
+    </Pressable>
+  );
+}
+
+function FunctionsFirstRow() {
   return (
     <View style={styles.functionsContainer}>
-      <BookSeat />
+      <LoanList />
       <FindBook />
     </View>
   );
 }
 
+function FunctionsSecondRow() {
+  return (
+    <View style={styles.functionsContainer}>
+      <BookSeat />
+      <WishList />
+    </View>
+  );
+}
+
 export default function Home() {
-  
   return (
     <SafeAreaProvider style={styles.container}>
       <HomeBar />
@@ -98,7 +132,7 @@ const styles = StyleSheet.create({
   },
   content: {
     alignItems: "center",
-    padding: 50,
+    padding: 40,
     gap: 20
   },
   events: {
@@ -116,10 +150,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   function: {
-    padding: 30,
+    width: 150,
+    padding: 25,
     borderColor: "black",
     borderWidth: 0.5,
     backgroundColor: "#ECEDC6",
-    borderRadius: 10
+    borderRadius: 10,
+  },
+  functionText: {
+    textAlign: "center"
   }
 });

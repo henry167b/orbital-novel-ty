@@ -27,8 +27,9 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const { signIn } = useAuth();
 
+  // changed for easier testing
   const injectLoginScript = `
-    document.getElementById('username').value="` + user + `";
+    document.getElementById('username').value="`+ user + `";
     document.getElementById('password').value="` + password + `";
     document.getElementsByName('submit')[0].click();
     true;
@@ -99,6 +100,7 @@ export default function Login() {
         source={{ uri: 'https://www.nlb.gov.sg/mylibrary' }}
         onMessage={ (e) => {
           if (e.nativeEvent.data == "true") {
+            // changed for easuer testing
             signIn(user, password);
           } else {
             setErrMsg("Invalid login details");
@@ -111,7 +113,7 @@ export default function Login() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 10, //change to flex 10
+    flex: 2, //change to flex 10
     backgroundColor: '#BFBFBF',
     alignItems: 'center',
     paddingTop: 25,
