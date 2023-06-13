@@ -1,66 +1,78 @@
 import { useRouter } from "expo-router";
-import { Button, Appbar, Surface, Text, TextInput, Searchbar } from "react-native-paper";
+import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
 import { useState } from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-
-function HomeBar() {
-  const router = useRouter();
-  return (
-    <Appbar.Header style={styles.bar} elevated="true" mode="center-aligned">
-      <Appbar.BackAction onPress={ () => router.back() }/>
-      <Appbar.Content title="Novel-ty" />
-      <Appbar.Action icon="bell" />
-      <Appbar.Action icon="dots-vertical" />
-    </Appbar.Header>
-  );
-}
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <Searchbar
-      placeholder="Search a book"
+      placeholder="Search on Novel-ty"
       onChangeText={setSearchQuery}
       value={searchQuery}
       style={styles.searchbar}
+      inputStyle={styles.searchbarInput}
       mode="bar" />
   );
 }
 
-function Content() {
+function RecentSearches() {
   return (
-    <View style={styles.content}>
-      <Search />
+    <View style={styles.recentSearches}>
+      <Text>RECENT SEARCHES</Text>
+    </View>
+  );
+}
+
+function Recommended() {
+  return (
+    <View style={styles.recommended}>
+      <Text>RECOMMENDED FOR YOU</Text>
     </View>
   );
 }
 
 export default function FindABook() {
   return (
-    <SafeAreaProvider style={styles.container}>
-      <HomeBar />
-      <Content />
-    </SafeAreaProvider>
+    <SafeAreaView style={styles.container}>
+      <Search />
+      <Divider style={{width: '100%' }}/>
+      <RecentSearches />
+      <Recommended />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#BFBFBF",
-  },
-  bar: {
-    backgroundColor: "#DBE9FD",
-    borderBottomWidth: 0.5,
-    width: "100%",
-  },
-  content: {
+    flex: 1,
+    backgroundColor: 'white',
     alignItems: "center",
-    padding: 40,
-    gap: 20,
+    justifyContent: "flex-start",
   },
   searchbar: {
-    backgroundColor: "#ECEDC6",
+    backgroundColor: "#F3F6F8",
+    borderRadius: 10,
+    marginHorizontal: 35,
+    marginVertical: 25,
+    height: 50
   },
+  recentSearches: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    width: '100%',
+    paddingHorizontal: 35,
+    paddingTop: 35
+  },
+  recommended: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    width: '100%',
+    paddingHorizontal: 35,
+    paddingTop: 35
+  }
 });

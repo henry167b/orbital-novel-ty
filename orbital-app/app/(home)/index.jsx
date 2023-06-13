@@ -1,13 +1,12 @@
 import { Pressable, StyleSheet, View } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar, Text, Button, Surface } from "react-native-paper";
 import { useAuth } from "../../contexts/auth";
 import { Link, Stack } from "expo-router";
 
 function HomeBar() {
   return (
-    <Appbar.Header style={styles.bar} elevated="true" mode="center-aligned">
-      <Appbar.BackAction />
+    <Appbar.Header style={styles.bar} mode="center-aligned" statusBarHeight={60}>
       <Appbar.Content title="Novel-ty" />
       <Appbar.Action icon="bell" />
       <Appbar.Action icon="dots-vertical" />
@@ -20,8 +19,6 @@ function Content() {
   return (
     <View style={styles.content}>
       <Events />
-      <FunctionsFirstRow />
-      <FunctionsSecondRow />
       <Button mode="contained" onPress={() => signOut()}>Sign out</Button>
     </View>
   );
@@ -29,119 +26,41 @@ function Content() {
 
 function Events() {
   return (
-    <Surface style={styles.events}>
-      <View style={{
-        backgroundColor: "#ECEDC6",
-        borderBottomWidth: 0.5,
-        width: "100%",
-        padding: 20,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        alignItems: "center"}}>
-        <Text variant="titleLarge">Upcoming Events</Text>
-      </View>
-      <View style={{
-        padding: 10
-      }}>
-        <Button buttonColor="#ECEDC6" textColor="black" mode="contained-tonal">View More</Button>
-      </View>
-    </Surface>
-  );
-}
-
-function LoanList() {
-  return (
-    <Link href="/loanlist" asChild>
-      <Pressable>
-        <Surface style={styles.function}>
-          <Text style={styles.functionText} variant="titleMedium">Loan List</Text>
-        </Surface>
-      </Pressable>
-    </Link>
-  );
-}
-
-function FindBook() {
-  return (
-    <Link href="/findabook" asChild>
-      <Pressable>
-        <Surface style={styles.function}>
-          <Text style={styles.functionText} variant="titleMedium">Find a book</Text>
-        </Surface>
-      </Pressable>
-    </Link>
-    
-  );
-}
-
-function BookSeat() {
-  return (
-    <Pressable>
-      <Surface style={styles.function}>
-        <Text style={styles.functionText} variant="titleMedium">Book a seat</Text>
-      </Surface>
-    </Pressable>
-  );
-}
-
-function WishList() {
-  return (
-    <Pressable>
-      <Surface style={styles.function}>
-        <Text style={styles.functionText} variant="titleMedium">Wishlist</Text>
-      </Surface>
-    </Pressable>
-  );
-}
-
-function FunctionsFirstRow() {
-  return (
-    <View style={styles.functionsContainer}>
-      <LoanList />
-      <FindBook />
-    </View>
-  );
-}
-
-function FunctionsSecondRow() {
-  return (
-    <View style={styles.functionsContainer}>
-      <BookSeat />
-      <WishList />
+    <View style={styles.events}>
+      <Text variant="titleMedium">Upcoming Events</Text>
     </View>
   );
 }
 
 export default function Home() {
   return (
-    <SafeAreaProvider style={styles.container}>
+    <View style={styles.container}>
       <HomeBar />
       <Content />
-    </SafeAreaProvider>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#BFBFBF",
+    flex : 1,
+    backgroundColor: 'white'
   },
   bar: {
-    backgroundColor: "#DBE9FD",
-    borderBottomWidth: 0.5,
-    width: "100%"
+    width: "100%",
+    backgroundColor: 'white'
   },
   content: {
     alignItems: "center",
-    padding: 40,
+    paddingHorizontal: 35,
+    paddingTop: 20,
     gap: 20
   },
   events: {
-    alignItems: "center",
+    alignItems: 'flex-start',
     justifyContent: "space-evenly",
     width: "100%",
-    borderWidth: 0.5,
-    borderRadius: 10,
-    backgroundColor: "#DBE9FD"
+    gap: 10
   },
   functionsContainer: {
     flexDirection: "row",

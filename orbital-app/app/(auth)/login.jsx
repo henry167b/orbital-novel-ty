@@ -40,7 +40,7 @@ export default function Login() {
     true;
   `;
 
-  const handleSubmit = () => {
+  const handleSubmit = () => {    
     setErrMsg("");
     setLoading(true);
     injectLogin();
@@ -58,54 +58,58 @@ export default function Login() {
 
   return (
     <SafeAreaProvider>
-      <Surface style={styles.container}>
-        <Text variant='displayMedium' style={{padding: 50}}>Novel-ty</Text>
-				<Surface style={styles.loginContainer} elevation={3}>
-          <Text variant='headlineSmall' style={{paddingVertical: 10}}>Welcome Back!</Text>
-            <View style={{width: '100%'}}>
-            <Text variant='titleMedium' style={{alignItems: 'flex-start'}}>myLibrary User</Text>
+      <View style={styles.container}>
+        <View style={styles.loginContainer}>
+
+          <Text variant='headlineSmall'>Let's Sign You In</Text>
+
+          <View style={{width: '100%'}}>
+            <Text variant='titleSmall' style={{alignItems: 'flex-start', color: 'gray'}}>myLibrary User</Text>
             <TextInput
-              mode='outlined'
               value={user}
               onChangeText={setUser}
               style={styles.textInput}
             />
-            </View>
+          </View>
+
           <View style={{width: '100%'}}>
-            <Text variant='titleMedium' style={{alignItems: 'flex-start'}}>Password</Text>
+            <Text variant='titleSmall' style={{alignItems: 'flex-start', color: 'gray'}}>Password</Text>
             <TextInput
               secureTextEntry
-              mode='outlined'
               value={password}
               onChangeText={setPassword}
               style={styles.textInput}
             />
           </View>
-          <Button 
-            mode='contained' 
-            contentStyle={styles.loginButton}
-            onPress={handleSubmit}>
-            Sign In
-          </Button>
-          { errMsg !== "" && <Text>{errMsg}</Text>}
-          { loading && <ActivityIndicator /> }
-          <RememberMe />
-        </Surface>
-      </Surface>	
+        </View>
+        { errMsg !== "" && <Text>{errMsg}</Text>}
+        { loading && <ActivityIndicator /> }
+
+        <Button 
+          mode='contained' 
+          contentStyle={{}}
+          style={{borderRadius: 5, width: '100%'}}
+          labelStyle={{}}
+          onPress={handleSubmit}>
+          SIGN IN
+        </Button>
+      </View>	
+
       {true && 
         <WebView
         incognito={true}
         ref={(r) => (this.webref = r)}
-        style={{flex: 1}} //change to 0
+        style={{flex: 1}} //change to 0 to hide
         source={{ uri: 'https://www.nlb.gov.sg/mylibrary' }}
         onMessage={ (e) => {
           if (e.nativeEvent.data == "true") {
-            // changed for easuer testing
+            // changed for easier testing
             signIn(user, password);
           } else {
             setErrMsg("Invalid login details");
           }
-        }} /> }
+        }} />
+      }
     </SafeAreaProvider>
     
   );
@@ -113,25 +117,23 @@ export default function Login() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2, //change to flex 10
-    backgroundColor: '#BFBFBF',
+    flex: 10, //change to flex 10
+    backgroundColor: 'white',
     alignItems: 'center',
-    paddingTop: 25,
-    paddingBottom: 25 //change to 350
+    justifyContent: 'space-between',
+    paddingTop: 100,
+    paddingBottom: 25, //change to 350
+    paddingHorizontal: 40
   },
   loginContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-evenly',
-    padding: 30,
-    gap: 20,
-    width: '75%',
-    borderRadius: 10
+    gap: 50,
+    width: '100%',
   },
   textInput: {
-    height: 30,
-    width: '100%'
-  },
-  loginButton: {
-    width: '100%'
+    height: 40,
+    width: '100%',
+    backgroundColor: 'white',
   }
 });

@@ -1,80 +1,75 @@
 import { useRouter } from "expo-router";
-import { Button, Appbar, Surface, Text } from "react-native-paper";
+import { Button, Appbar, Surface, Text, SegmentedButtons } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useState } from "react";
 
 function HomeBar() {
-  const router = useRouter();
   return (
-    <Appbar.Header style={styles.bar} elevated="true" mode="center-aligned">
-      <Appbar.BackAction onPress={ () => router.back() }/>
+    <Appbar.Header style={styles.bar} mode="center-aligned" statusBarHeight={60}>
       <Appbar.Content title="Novel-ty" />
-      <Appbar.Action icon="bell" />
-      <Appbar.Action icon="dots-vertical" />
     </Appbar.Header>
   );
 }
 
-function List() {
-  return (
-    <Surface style={styles.list}>
-      <View style={{
-        backgroundColor: "#ECEDC6",
-        borderBottomWidth: 0.5,
-        width: "100%",
-        padding: 20,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        alignItems: "center"}}>
-        <Text variant="titleLarge">Loan List</Text>
-      </View>
-      <View style={{
-        padding: 10
-      }}>
-      </View>
-    </Surface>
-  );
-}
+function ListTabs() {
+  const [value, setValue] = useState('');
 
-function Content() {
   return (
-    <View style={styles.content}>
-      <List />
-    </View>
+    <SegmentedButtons
+      style={styles.listTabs}
+      value={value}
+      density="regular"
+      theme={{fontSize: 16}}
+      onValueChange={setValue}
+      buttons={[
+        {
+          value: "wishlist",
+          label: <Text style={{fontSize: 10}}>WISH LIST</Text>,
+          style: {...styles.tab, borderRadius: 0, padding: 0}
+        },
+        {
+          value: "loans",
+          label: <Text style={{fontSize: 10}}>LOANS</Text>,
+          style: {...styles.tab}
+        },
+        {
+          value: "reservations",
+          label: <Text style={{fontSize: 10}} >RESERVATIONS</Text>,
+          style: {...styles.tab, borderRadius: 0}
+        }
+        
+      ]} />
   );
 }
 
 export default function LoanList() {
-  const router = useRouter();
-
   return (
-    <SafeAreaProvider style={styles.container}>
+    <View style={styles.container}>
       <HomeBar />
-      <Content />
-    </SafeAreaProvider>
+      <ListTabs />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#BFBFBF",
+    flex: 1,
+    backgroundColor: "white",
+    paddingHorizontal: 35
   },
   bar : {
-    backgroundColor: "#DBE9FD",
-    borderBottomWidth: 0.5,
-    width: "100%"
+    width: "100%",
+    backgroundColor: 'white'
   },
   content: {
     alignItems: "center",
-    padding: 40,
     gap: 20
   },
-  list: {
-    alignItems: "center",
-    justifyContent: "space-evenly",
+  listTabs: {
     width: "100%",
-    borderWidth: 0.5,
-    borderRadius: 10,
-    backgroundColor: "#DBE9FD"
+  },
+  tab: {
+    borderRadius: 0,
   }
 })
