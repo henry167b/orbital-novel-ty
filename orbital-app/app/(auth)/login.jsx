@@ -40,7 +40,10 @@ export default function Login() {
     true;
   `;
 
-  const handleSubmit = () => {    
+  const handleSubmit = () => {   
+    setUser("ibnu2651");
+    setPassword("poohpanda26");
+    
     setErrMsg("");
     setLoading(true);
     injectLogin();

@@ -3,6 +3,7 @@ import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "re
 import { View, StyleSheet } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getAvailability } from "../../nlb_api/nlb";
 
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -22,6 +23,7 @@ function RecentSearches() {
   return (
     <View style={styles.recentSearches}>
       <Text>RECENT SEARCHES</Text>
+      <Button mode='outlined' onPress={ () => getAvailability(9780241951446) }>press me</Button>
     </View>
   );
 }
