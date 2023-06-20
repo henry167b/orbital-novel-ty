@@ -1,8 +1,10 @@
+import { useEffect,useCallback } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar, Text, Button, Surface } from "react-native-paper";
 import { useAuth } from "../../contexts/auth";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, useFocusEffect } from "expo-router";
+import { storeDefaults } from "../../async_storage/storage";
 
 function HomeBar() {
   return (
@@ -33,6 +35,11 @@ function Events() {
 }
 
 export default function Home() {
+  useFocusEffect( 
+    useCallback( () => {
+      storeDefaults();
+    }, []));
+
   return (
     <View style={styles.container}>
       <HomeBar />

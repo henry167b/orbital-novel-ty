@@ -4,6 +4,7 @@ import { View, StyleSheet } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAvailability } from "../../nlb_api/nlb";
+import { addBook } from "../../async_storage/storage";
 
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,7 +15,7 @@ function Search() {
       onChangeText={setSearchQuery}
       value={searchQuery}
       style={styles.searchbar}
-      inputStyle={styles.searchbarInput}
+      onIconPress={ () => addBook(searchQuery)}
       mode="bar" />
   );
 }
@@ -23,7 +24,7 @@ function RecentSearches() {
   return (
     <View style={styles.recentSearches}>
       <Text>RECENT SEARCHES</Text>
-      <Button mode='outlined' onPress={ () => getAvailability(9780241951446) }>press me</Button>
+      <Button mode='outlined' onPress={ () => getAvailability('0571355064')}>add book</Button>
     </View>
   );
 }

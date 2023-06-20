@@ -30,12 +30,14 @@ export function getAvailability(ISBN) {
       .then(res=>{
          const doc = new DOMParser().parseFromString(res.data, 'text/xml');
          const items = doc.getElementsByTagName("Item");
+         let locations = [];
          for (let i = 0; i <items.length; i++) {
             if (items[i].childNodes[7].textContent == 'Not on Loan') {
-               console.log(items[i].childNodes[2].textContent);
+               locations[locations.length] = (items[i].childNodes[2].textContent);
             }
          }
-         return res;
+         console.log(locations);
+         return locations;
          })
       .catch(err=>{console.log(err); console.log("error")});
 }

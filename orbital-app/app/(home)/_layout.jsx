@@ -9,7 +9,8 @@ export default function Home() {
     <Tabs screenOptions={{ headerShown: false }} >
       <Tabs.Screen name="index" options={{ title: "Home"}} />
       <Tabs.Screen name="findabook" options={{ title: "Search" }} />
-      <Tabs.Screen name="loanlist" options={{ title: "Book List" }} />
+      <Tabs.Screen name="booklists" options={{ title: "Book List" }} />
+      <Tabs.Screen name="libraries" options={{ title: "Libraries" }} />
     </Tabs>
   );
 }
