@@ -3,8 +3,9 @@ import { Surface, Text, Card, Button, Appbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
-import { storeDefaults } from "../../async_storage/storage";
+import { useEffect, useState, useCallback } from "react";
+import { storeDefaults, getLibraries, getBooks } from "../../async_storage/storage";
+import { useFocusEffect } from "expo-router";
 
 function HomeBar() {
   return (
@@ -15,38 +16,32 @@ function HomeBar() {
 }
 
 export default function Libraries() {
-  const [data, setData] = useState([]);
+  const [libraries, setLibraries] = useState([]);
+  const [books, setBooks] = useState([]);
 
-  useEffect( () => {
-    getLibraries();
-  }, []);
-
-  const getLibraries = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@libraries');
-      if (jsonValue != null) {
-        const parsedData = JSON.parse(jsonValue);
-        setData(parsedData);
-      }
-    } catch(e) {
-      console.log(e);
-    }
-  }
+  useFocusEffect( 
+    useCallback( () => {
+      getLibraries().then(libraries => {
+        libraries.sort((a, b) => (a.books.length > b.books.length) ? -1 : ((b.books.length > a.books.length) ? 1 : 0));
+        setLibraries(libraries);
+      });
+      getBooks().then(books => setBooks(books));
+    }, []));
 
   return (
     <View style={styles.container}>
       <HomeBar />
       <FlatList
       style={styles.list}
-      data={ data }
-      renderItem={({ item }) => <Library lib={ item } />}
+      data={ libraries }
+      renderItem={({ item }) => <Library lib={ item } books={books.length}/>}
       />
-      <Button onPress={() => console.log(data)}>Press me</Button>
+      <Button onPress={() => console.log(libraries)}>Press me</Button>
     </View>
   );
 }
 
-function Library({ lib }) {
+function Library({ lib, books }) {
   return (
     <View style={styles.library}>
       <Card style={styles.surface} mode="elevated">
@@ -56,7 +51,7 @@ function Library({ lib }) {
       </Card>
       <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Feather name='book' size={20} />
-        <Text>{lib.books.length} / 5</Text>
+        <Text>{lib.books.length} / {books}</Text>
       </View>
     </View>
   );

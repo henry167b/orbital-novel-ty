@@ -2,7 +2,7 @@ import axios from "axios";
 import { DOMParser } from "xmldom";
 
 // usage of module
-export function getAvailability(ISBN) {
+export async function getAvailability(ISBN) {
    const url = 'https://openweb.nlb.gov.sg/OWS/CatalogueService.svc?singleWsdl';
    const API_KEY = 'RGV2LUlibnU6UEBzc3cwcmQyMDIz';
    const xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cat="http://www.nlb.gov.sg/ws/CatalogueService">
@@ -18,7 +18,7 @@ export function getAvailability(ISBN) {
       </soapenv:Body>
       </soapenv:Envelope>`;
 
-   axios.post(
+   const res = await axios.post(
       url,
       xml,
       { // httpsAgent: new https.Agent({ secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT }),
@@ -27,17 +27,15 @@ export function getAvailability(ISBN) {
          'SOAPAction': 'http://www.nlb.gov.sg/ws/CatalogueService/ICatalogueService/GetAvailabilityInfo'
          }
       })
-      .then(res=>{
-         const doc = new DOMParser().parseFromString(res.data, 'text/xml');
-         const items = doc.getElementsByTagName("Item");
-         let locations = [];
-         for (let i = 0; i <items.length; i++) {
-            if (items[i].childNodes[7].textContent == 'Not on Loan') {
-               locations[locations.length] = (items[i].childNodes[2].textContent);
-            }
-         }
-         console.log(locations);
-         return locations;
-         })
-      .catch(err=>{console.log(err); console.log("error")});
+
+   const doc = new DOMParser().parseFromString(res.data, 'text/xml');
+   const items = doc.getElementsByTagName("Item");
+   let locations = [];
+   for (let i = 0; i <items.length; i++) {
+      if (items[i].childNodes[7].textContent == 'Not on Loan') {
+         locations[locations.length] = (items[i].childNodes[2].textContent);
+      }
+   }
+   console.log(locations);
+   return locations;
 }
