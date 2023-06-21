@@ -114,7 +114,7 @@ export default function Login() {
         <WebView
         incognito={true}
         ref={(r) => (this.webref = r)}
-        style={{flex: 1}} //change to 0 to hide
+        style={{flex: 0}} //change to 0 to hide
         source={{ uri: 'https://www.nlb.gov.sg/mylibrary' }}
         onMessage={ (e) => {
           if (e.nativeEvent.data == "true") {

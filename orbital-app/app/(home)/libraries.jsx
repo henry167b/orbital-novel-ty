@@ -36,7 +36,6 @@ export default function Libraries() {
       data={ libraries }
       renderItem={({ item }) => <Library lib={ item } books={books.length}/>}
       />
-      <Button onPress={() => console.log(libraries)}>Press me</Button>
     </View>
   );
 }

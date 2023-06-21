@@ -14,34 +14,34 @@ function HomeBar() {
   );
 }
 
-function Book({ book }) {
+function Book({ book, stateChanger }) {
   return (
     <View style={styles.book}>
       <View>
         <Text>ISBN: {book}</Text>
-        <Text>Address: </Text>
       </View>
-      <Button mode='contained' onPress={() => removeBook(book)}>Remove</Button>
+      <Button mode='contained' onPress={() => { removeBook(book).then(e => stateChanger(true)) }}>Remove</Button>
     </View>
   );
 }
 
 function WishList() {
   const [data, setData] = useState([]);
+  const [reload, setReload] = useState(false);
 
   useFocusEffect( 
     useCallback( () => {
+      setReload(false);
       getBooks().then(books => setData(books));
-    }, []));
+    }, [reload]));
 
   return (
     <View>
       <FlatList
       style={{ width: '100%' }}
       data={ data }
-      renderItem={({ item }) => <Book book={item}/>}
+      renderItem={({ item }) => <Book book={item} stateChanger={setReload} />}
       />
-      <Button mode='outlined' onPress={ () => console.log(data)}>print books</Button>
     </View>
     
   );

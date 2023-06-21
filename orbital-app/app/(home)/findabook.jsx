@@ -24,7 +24,6 @@ function RecentSearches() {
   return (
     <View style={styles.recentSearches}>
       <Text>RECENT SEARCHES</Text>
-      <Button mode='outlined' onPress={ () => getAvailability('0571355064')}>add book</Button>
     </View>
   );
 }

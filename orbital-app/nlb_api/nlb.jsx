@@ -36,6 +36,5 @@ export async function getAvailability(ISBN) {
          locations[locations.length] = (items[i].childNodes[2].textContent);
       }
    }
-   console.log(locations);
    return locations;
 }
