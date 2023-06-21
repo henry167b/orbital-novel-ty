@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "orbital-app",
+    "scheme": "orbital-app",
     "slug": "orbital-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,10 +22,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ibnu2651.orbitalapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7fa5510e-003a-4459-965b-d63da7b87568"
+      }
     }
   }
 }
