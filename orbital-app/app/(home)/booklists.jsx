@@ -4,7 +4,7 @@ import { View, StyleSheet, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState, useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { storeDefaults, getBooks } from "../../async_storage/storage";
+import { storeDefaults, getBooks, removeBook } from "../../async_storage/storage";
 
 function HomeBar() {
   return (
@@ -17,8 +17,11 @@ function HomeBar() {
 function Book({ book }) {
   return (
     <View style={styles.book}>
-      <Text>ISBN: {book}</Text>
-      <Text>Address: </Text>
+      <View>
+        <Text>ISBN: {book}</Text>
+        <Text>Address: </Text>
+      </View>
+      <Button mode='contained' onPress={() => removeBook(book)}>Remove</Button>
     </View>
   );
 }
@@ -94,8 +97,9 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   book: {
+    flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     backgroundColor: 'white',
     padding: 10,
     borderWidth: 1,

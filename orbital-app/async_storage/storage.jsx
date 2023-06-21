@@ -44,6 +44,19 @@ export const addBook = async (ISBN) => {
   }
 }
 
+export const removeBook = async (ISBN) => {
+  try {
+    const jsonBooks = await AsyncStorage.getItem("@books");
+    const books = JSON.parse(jsonBooks);
+    const index = books.indexOf(ISBN);
+    books.splice(index, 1);
+    await AsyncStorage.setItem("@books", JSON.stringify(books));
+    console.log('remove' + ISBN);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export const getBooks = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('@books');
