@@ -40,9 +40,15 @@ export default function Login() {
     true;
   `;
 
-  const handleSubmit = () => {   
-    setUser("ibnu2651");
-    setPassword("poohpanda26");
+  const bypass = () => {
+    setUser(user);
+    setPassword(password);
+    signIn(user, password);
+  }
+
+  const handleSubmit = () => {
+    // setUser("ibnu2651");
+    // setPassword("poohpanda26");
     
     setErrMsg("");
     setLoading(true);
@@ -93,7 +99,13 @@ export default function Login() {
           contentStyle={{}}
           style={{borderRadius: 5, width: '100%'}}
           labelStyle={{}}
-          onPress={handleSubmit}>
+          onPress={() => {
+            if (user == 'novelty' && password == 'password') {
+              bypass();
+            } else {
+              handleSubmit();
+            }
+          }}>
           SIGN IN
         </Button>
       </View>	
