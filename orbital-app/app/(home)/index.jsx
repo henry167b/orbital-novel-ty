@@ -35,10 +35,9 @@ function Events() {
 }
 
 export default function Home() {
-  useFocusEffect( 
-    useCallback( () => {
-      storeDefaults();
-    }, []));
+  useEffect( () => {
+    storeDefaults();
+  }, []);
 
   return (
     <View style={styles.container}>

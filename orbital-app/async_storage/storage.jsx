@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAvailability } from "../nlb_api/nlb";
 
-const booksObject = ['9780593549292','9780063237957'];
+const booksObject = [];
 
 const librariesObject = [
   { name: 'Tampines Regional Library', location: '1 Tampines Walk Our Tampines Hub #02-01 Singapore 528523', books: [] },
