@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     backgroundColor: "#F3F6F8",
+    width: '80%',
     borderRadius: 10,
     marginHorizontal: 35,
     marginVertical: 25,
