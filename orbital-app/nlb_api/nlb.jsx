@@ -56,27 +56,36 @@ export function search(query) {
          </Modifiers>
             <SortSchema>TITLE</SortSchema>
             <StartRecordPosition>1</StartRecordPosition>
-            <MaximumRecords>100</MaximumRecords>
+            <MaximumRecords>10</MaximumRecords>
             <SetId></SetId>
          </Modifiers>
       </cat:SearchRequest>
       </soapenv:Body>
       </soapenv:Envelope>`;
 
+   const res = axios.post(
+      url,
+      xml,
+      { // httpsAgent: new https.Agent({ secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT }),
+      headers: {
+         'Content-Type': 'text/xml; charset=utf-8',
+         'SOAPAction': 'http://www.nlb.gov.sg/ws/CatalogueService/ICatalogueService/Search'
+         }
+      })
+
    try{
 
       const doc = new DOMParser().parseFromString(res.data, 'text/xml');
-      const items = doc.getElementsByTagName('Item');
+      const items = doc.getElementsByTagName('Title');
       let books = [];
+      const totalrecords = doc.getElementsByTagName('TotalRecords')[0].textContent
   
       for (let i = 0; i < items.length; i++) {
         const book = {
-          title: items[i].getElementsByTagName('Title.TitleName')[0].textContent,
-          author: items[i].getElementsByTagName('Title.Author')[0].textContent,
-          isbn: items[i].getElementsByTagName('Title.ISBN')[0].textContent,
-          author: items[i].getElementsByTagName('Title.Author')[0].textContent,
-          publishyear: items[i].getElementsByTagName('Title.PublishYear')[0].textContent,
-          total_records: items[i].getElementsByTagName('TotalRecords')[0].textContent
+          title: items[i].getElementsByTagName('TitleName')[0].textContent,
+          author: items[i].getElementsByTagName('Author')[0].textContent,
+          isbn: items[i].getElementsByTagName('ISBN')[0].textContent,
+          publishyear: items[i].getElementsByTagName('PublishYear')[0].textContent
         };
   
         books.push(book);
@@ -90,4 +99,4 @@ export function search(query) {
     }  
    }
 
-search('Lee Kuan Yew')
+search('Lee Kuan Yew');
