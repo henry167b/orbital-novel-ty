@@ -1,14 +1,14 @@
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "react-native-paper";
 import { View, StyleSheet, FlatList } from "react-native";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAvailability, search } from "../../nlb_api/nlb";
 import { addBook } from "../../async_storage/storage";
 
 
 
-function Search({data, searchNLB}) {
+function Search({searchNLB}) {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
@@ -18,6 +18,7 @@ function Search({data, searchNLB}) {
       value={searchQuery}
       style={styles.searchbar}
       onIconPress={ () => searchNLB(searchQuery)}
+      onSubmitEditing={ () => searchNLB(searchQuery)}
       mode="bar" />
   );
 }
@@ -32,12 +33,13 @@ function Bookbox({ book }) {
   );
 }
 
-function Searchresults({data, searchNLB}) {
+function Searchresults({data}) {
   return (
     <View style={styles.searchResults}>
       <Text>RESULTS</Text>
       <FlatList
-      style={{ width: '100%' }}
+      showsVerticalScrollIndicator={ false }
+      style={{ width: '100%', marginVertical: 20 }}
       data={ data }
       renderItem={({ item }) => <Bookbox book={item} />}
       />
@@ -63,18 +65,28 @@ function Recommended() {
 
 export default function FindABook() {
   const [data, setData] = useState([]);
+  const [showSearch, setShowSearch] = useState(false);
 
   const searchNLB = (query) => {
-    const books = search(query).then(e => setData(e));
+    search(query).then(res => {
+      setData(res);
+      setShowSearch(true);
+    });
   }
+
+  useFocusEffect(
+    useCallback( () => {
+      setShowSearch(false);
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container}>
-      <Search data={data} searchNLB={searchNLB} />
+      <Search searchNLB={searchNLB} />
       <Divider style={{width: '100%' }}/>
-      <Searchresults data={data} searchNLB={searchNLB} />
-      <RecentSearches />
-      <Recommended />
+      { showSearch && <Searchresults data={data} /> }
+      { !showSearch && <RecentSearches /> }
+      { !showSearch && <Recommended /> }
     </SafeAreaView>
   );
 }
@@ -99,7 +111,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: '100%',
     paddingHorizontal: 35,
-    paddingTop: 35
+    paddingTop: 20
   },
   recommended: {
     flex: 1,
@@ -107,7 +119,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: '100%',
     paddingHorizontal: 35,
-    paddingTop: 35
+    paddingTop: 20
   },
   searchResults: {
     flex: 1,
@@ -115,10 +127,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: '100%',
     paddingHorizontal: 35,
-    paddingTop: 35
+    paddingTop: 20
   },
   book: {
-    flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     backgroundColor: 'white',

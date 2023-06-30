@@ -31,9 +31,8 @@ function WishList() {
 
   useFocusEffect( 
     useCallback( () => {
-      setReload(false);
       getBooks().then(books => setData(books));
-    }, [reload]));
+    }, []));
 
   return (
     <View>
