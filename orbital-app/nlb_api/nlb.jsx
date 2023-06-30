@@ -45,36 +45,25 @@ export async function search(query) {
    const xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cat="http://www.nlb.gov.sg/ws/CatalogueService">
    <soapenv:Header/>
    <soapenv:Body>
-      <cat:searchRequest>
+      <cat:SearchRequest>
          <cat:APIKey>` + API_KEY + `</cat:APIKey>
          <cat:SearchItems>
             <cat:SearchItem>
-               <cat:SearchField>` + query + `</cat:SearchField>
-               <SearchTerms></SearchTerms>
-            <cat:/SearchItem>
-         <cat:/SearchItems>
-         </Modifiers>
-            <SortSchema>TITLE</SortSchema>
-            <StartRecordPosition>1</StartRecordPosition>
-            <MaximumRecords>10</MaximumRecords>
-            <SetId></SetId>
-         </Modifiers>
+               <cat:SearchField>Keywords</cat:SearchField>
+               <cat:SearchTerms>` + query + `</cat:SearchTerms>
+            </cat:SearchItem>
+         </cat:SearchItems>
+         <cat:Modifiers>
+            <cat:SortSchema>TITLE</cat:SortSchema>
+            <cat:StartRecordPosition>1</cat:StartRecordPosition>
+            <cat:MaximumRecords>10</cat:MaximumRecords>
+            <cat:SetId></cat:SetId>
+         </cat:Modifiers>
       </cat:SearchRequest>
       </soapenv:Body>
       </soapenv:Envelope>`;
 
-   const res = axios.post(
-      url,
-      xml,
-      { // httpsAgent: new https.Agent({ secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT }),
-      headers: {
-         'Content-Type': 'text/xml; charset=utf-8',
-         'SOAPAction': 'http://www.nlb.gov.sg/ws/CatalogueService/ICatalogueService/Search'
-         }
-      })
-
    try{
-
       const res = await axios.post(
          url,
          xml,
@@ -87,7 +76,7 @@ export async function search(query) {
       const doc = new DOMParser().parseFromString(res.data, 'text/xml');
       const items = doc.getElementsByTagName('Title');
       let books = [];
-      const totalrecords = doc.getElementsByTagName('TotalRecords')[0].textContent
+      const totalrecords = doc.getElementsByTagName('TotalRecords')[0].textContent;
   
       for (let i = 0; i < items.length; i++) {
         const book = {
