@@ -38,3 +38,56 @@ export async function getAvailability(ISBN) {
    }
    return locations;
 }
+
+export function search(query) {
+   const url = 'https://openweb.nlb.gov.sg/OWS/CatalogueService.svc?singleWsdl';
+   const API_KEY = 'RGV2LUlibnU6UEBzc3cwcmQyMDIz';
+   const xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cat="http://www.nlb.gov.sg/ws/CatalogueService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cat:searchRequest>
+         <cat:APIKey>` + API_KEY + `</cat:APIKey>
+         <cat:SearchItems>
+            <cat:SearchItem>
+               <cat:SearchField>` + query + `</cat:SearchField>
+               <SearchTerms></SearchTerms>
+            <cat:/SearchItem>
+         <cat:/SearchItems>
+         </Modifiers>
+            <SortSchema>TITLE</SortSchema>
+            <StartRecordPosition>1</StartRecordPosition>
+            <MaximumRecords>100</MaximumRecords>
+            <SetId></SetId>
+         </Modifiers>
+      </cat:SearchRequest>
+      </soapenv:Body>
+      </soapenv:Envelope>`;
+
+   try{
+
+      const doc = new DOMParser().parseFromString(res.data, 'text/xml');
+      const items = doc.getElementsByTagName('Item');
+      let books = [];
+  
+      for (let i = 0; i < items.length; i++) {
+        const book = {
+          title: items[i].getElementsByTagName('Title.TitleName')[0].textContent,
+          author: items[i].getElementsByTagName('Title.Author')[0].textContent,
+          isbn: items[i].getElementsByTagName('Title.ISBN')[0].textContent,
+          author: items[i].getElementsByTagName('Title.Author')[0].textContent,
+          publishyear: items[i].getElementsByTagName('Title.PublishYear')[0].textContent,
+          total_records: items[i].getElementsByTagName('TotalRecords')[0].textContent
+        };
+  
+        books.push(book);
+      }
+  
+      return books;
+      
+    } catch (error) {
+      console.log(error);
+      return [];
+    }  
+   }
+
+search('Lee Kuan Yew')
