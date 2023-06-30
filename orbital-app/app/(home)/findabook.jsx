@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "react-native-paper";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAvailability, search } from "../../nlb_api/nlb";
@@ -8,7 +8,7 @@ import { addBook } from "../../async_storage/storage";
 
 
 
-function Search() {
+function Search({data, searchNLB}) {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
@@ -17,12 +17,32 @@ function Search() {
       onChangeText={setSearchQuery}
       value={searchQuery}
       style={styles.searchbar}
-      onIconPress={ () => search(searchQuery)}
+      onIconPress={ () => searchNLB(searchQuery)}
       mode="bar" />
   );
 }
 
+function Bookbox({ book }) {
+  return (
+    <View style={styles.book}>
+      <Text>Title: {book.title}</Text>
+      <Text>Author: {book.author}</Text>
+      <Text>ISBN: {book.isbn}</Text>
+    </View>
+  );
+}
 
+function Searchresults({data, searchNLB}) {
+  return (
+    <View>
+      <FlatList
+      style={{ width: '100%' }}
+      data={ data }
+      renderItem={({ item }) => <Bookbox book={item} />}
+      />
+    </View>
+  );
+}
 
 function RecentSearches() {
   return (
@@ -41,10 +61,18 @@ function Recommended() {
 }
 
 export default function FindABook() {
+  const [data, setData] = useState([]);
+
+  const searchNLB = (query) => {
+    const books = search(query);
+    setData(books);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <Search />
+      <Search data={data} searchNLB={searchNLB} />
       <Divider style={{width: '100%' }}/>
+      <Searchresults data={data} searchNLB={searchNLB} />
       <RecentSearches />
       <Recommended />
     </SafeAreaView>
