@@ -116,5 +116,14 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 35,
     paddingTop: 35
+  },
+  book: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    backgroundColor: 'white',
+    padding: 10,
+    borderWidth: 1,
+    marginTop: 10
   }
 });
