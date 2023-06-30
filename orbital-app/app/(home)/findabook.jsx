@@ -3,8 +3,9 @@ import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "re
 import { View, StyleSheet } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getAvailability } from "../../nlb_api/nlb";
+import { getAvailability, search } from "../../nlb_api/nlb";
 import { addBook } from "../../async_storage/storage";
+
 
 
 function Search() {
@@ -16,10 +17,12 @@ function Search() {
       onChangeText={setSearchQuery}
       value={searchQuery}
       style={styles.searchbar}
-      onIconPress={ () => addBook(searchQuery)}
+      onIconPress={ () => search(searchQuery)}
       mode="bar" />
   );
 }
+
+
 
 function RecentSearches() {
   return (

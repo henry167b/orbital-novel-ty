@@ -1,4 +1,4 @@
-import axios from "axios";
+import {axios} from "axios";
 import { DOMParser } from "xmldom";
 
 // usage of module
@@ -39,7 +39,7 @@ export async function getAvailability(ISBN) {
    return locations;
 }
 
-export function search(query) {
+export async function search(query) {
    const url = 'https://openweb.nlb.gov.sg/OWS/CatalogueService.svc?singleWsdl';
    const API_KEY = 'RGV2LUlibnU6UEBzc3cwcmQyMDIz';
    const xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cat="http://www.nlb.gov.sg/ws/CatalogueService">
@@ -65,6 +65,15 @@ export function search(query) {
 
    try{
 
+      const res = await axios.post(
+         url,
+         xml,
+         { // httpsAgent: new https.Agent({ secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT }),
+         headers: {
+            'Content-Type': 'text/xml; charset=utf-8',
+            'SOAPAction': 'http://www.nlb.gov.sg/ws/CatalogueService/ICatalogueService/Search'
+            }
+         })
       const doc = new DOMParser().parseFromString(res.data, 'text/xml');
       const items = doc.getElementsByTagName('Item');
       let books = [];
@@ -83,11 +92,13 @@ export function search(query) {
       }
   
       return books;
-      
+
     } catch (error) {
       console.log(error);
       return [];
     }  
    }
 
-search('Lee Kuan Yew')
+var a = search("lee kuan yew");
+console.log(a);
+
