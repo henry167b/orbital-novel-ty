@@ -88,7 +88,6 @@ export async function search(query) {
   
         books.push(book);
       }
-      console.log(books);
       return books;
 
     } catch (error) {

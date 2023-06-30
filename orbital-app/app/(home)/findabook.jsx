@@ -34,7 +34,8 @@ function Bookbox({ book }) {
 
 function Searchresults({data, searchNLB}) {
   return (
-    <View>
+    <View style={styles.searchResults}>
+      <Text>RESULTS</Text>
       <FlatList
       style={{ width: '100%' }}
       data={ data }
@@ -64,8 +65,7 @@ export default function FindABook() {
   const [data, setData] = useState([]);
 
   const searchNLB = (query) => {
-    const books = search(query);
-    setData(books);
+    const books = search(query).then(e => setData(e));
   }
 
   return (
@@ -102,6 +102,14 @@ const styles = StyleSheet.create({
     paddingTop: 35
   },
   recommended: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    width: '100%',
+    paddingHorizontal: 35,
+    paddingTop: 35
+  },
+  searchResults: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
