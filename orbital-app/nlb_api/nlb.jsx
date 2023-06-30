@@ -1,4 +1,4 @@
-import {axios} from "axios";
+import axios from "axios";
 import { DOMParser } from "xmldom";
 
 // usage of module
@@ -88,7 +88,7 @@ export async function search(query) {
   
         books.push(book);
       }
-  
+      console.log(books);
       return books;
 
     } catch (error) {
@@ -96,5 +96,3 @@ export async function search(query) {
       return [];
     }  
    }
-
-search('Lee Kuan Yew');
