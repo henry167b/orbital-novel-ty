@@ -1,14 +1,14 @@
 import { useFocusEffect, useRouter } from "expo-router";
 import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "react-native-paper";
 import { View, StyleSheet, FlatList } from "react-native";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAvailability, search } from "../../nlb_api/nlb";
 import { addBook } from "../../async_storage/storage";
+import { PanGestureHandler, State } from "react-native-gesture-handler";
+import { Animated } from "react-native";
 
-
-
-function Search({searchNLB}) {
+function Search({ searchNLB }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
@@ -17,31 +17,70 @@ function Search({searchNLB}) {
       onChangeText={setSearchQuery}
       value={searchQuery}
       style={styles.searchbar}
-      onIconPress={ () => searchNLB(searchQuery)}
-      onSubmitEditing={ () => searchNLB(searchQuery)}
-      mode="bar" />
+      onIconPress={() => searchNLB(searchQuery)}
+      onSubmitEditing={() => searchNLB(searchQuery)}
+      mode="bar"
+    />
   );
 }
 
 function Bookbox({ book }) {
+  const translateX = new Animated.Value(0);
+  const panGestureHandler = Animated.event([{ nativeEvent: { translationX: translateX } }], {
+    useNativeDriver: true,
+  });
+
+  const handlePanStateChange = (event) => {
+    if (event.nativeEvent.state === State.END) {
+      if (event.nativeEvent.translationX < -80) {
+        Animated.timing(translateX, {
+          toValue: -80,
+          duration: 300,
+          useNativeDriver: true,
+        }).start();
+      } else {
+        Animated.timing(translateX, {
+          toValue: 0,
+          duration: 0,
+          useNativeDriver: true,
+        }).start();
+      }
+    } else if (event.nativeEvent.translationX > 0) {
+      translateX.setValue(0);
+    }
+  };
+  
+  
   return (
-    <View style={styles.book}>
-      <Text>Title: {book.title}</Text>
-      <Text>Author: {book.author}</Text>
-      <Text>ISBN: {book.isbn}</Text>
-    </View>
+    <PanGestureHandler
+      onGestureEvent={panGestureHandler}
+      onHandlerStateChange={handlePanStateChange}
+    >
+      <Animated.View
+        style={[
+          styles.book,
+          {
+            transform: [{ translateX: translateX }],
+          },
+        ]}
+      >
+        <Text>Title: {book.title}</Text>
+        <Text>Author: {book.author}</Text>
+        <Text>ISBN: {book.isbn}</Text>
+      </Animated.View>
+    </PanGestureHandler>
   );
 }
 
-function Searchresults({data}) {
+function Searchresults({ data }) {
   return (
     <View style={styles.searchResults}>
       <Text>RESULTS</Text>
       <FlatList
-      showsVerticalScrollIndicator={ false }
-      style={{ width: '100%', marginVertical: 20 }}
-      data={ data }
-      renderItem={({ item }) => <Bookbox book={item} />}
+        showsVerticalScrollIndicator={false}
+        style={{ width: '100%', marginVertical: 20 }}
+        data={data}
+        renderItem={({ item }) => <Bookbox book={item} />}
       />
     </View>
   );
@@ -68,14 +107,14 @@ export default function FindABook() {
   const [showSearch, setShowSearch] = useState(false);
 
   const searchNLB = (query) => {
-    search(query).then(res => {
+    search(query).then((res) => {
       setData(res);
       setShowSearch(true);
     });
-  }
+  };
 
   useFocusEffect(
-    useCallback( () => {
+    useCallback(() => {
       setShowSearch(false);
     }, [])
   );
@@ -83,10 +122,10 @@ export default function FindABook() {
   return (
     <SafeAreaView style={styles.container}>
       <Search searchNLB={searchNLB} />
-      <Divider style={{width: '100%' }}/>
-      { showSearch && <Searchresults data={data} /> }
-      { !showSearch && <RecentSearches /> }
-      { !showSearch && <Recommended /> }
+      <Divider style={{ width: '100%' }} />
+      {showSearch && <Searchresults data={data} />}
+      {!showSearch && <RecentSearches />}
+      {!showSearch && <Recommended />}
     </SafeAreaView>
   );
 }
@@ -134,14 +173,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: 'white',
     padding: 10,
-    borderWidth: 1,
+    borderWidth: 0,
     borderRadius: 8,
     margin: 10,
     marginTop: 10,
     shadowColor: "black",
-    shadowOffset: {width:0, height:2},
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-    elevation: 2, // for Android 
+    elevation: 4, // for Android 
   }
 });
