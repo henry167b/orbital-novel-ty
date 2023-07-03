@@ -1,4 +1,4 @@
-import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, View, StyleSheet, TouchableOpacity, RefreshControl } from "react-native";
 import { Surface, Text, Card, Button, Appbar, Modal } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from '@expo/vector-icons';
@@ -19,16 +19,21 @@ export default function Libraries() {
   const [libraries, setLibraries] = useState([]);
   const [books, setBooks] = useState([]);
   const [selectedLibrary, setSelectedLibrary] = useState(null); // To keep track of the selected library
+  const [refresh, setRefresh] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
-      getLibraries().then((libraries) => {
-        libraries.sort((a, b) => (a.books.length > b.books.length) ? -1 : ((b.books.length > a.books.length) ? 1 : 0));
-        setLibraries(libraries);
-      });
-      getBooks().then((books) => setBooks(books));
+      getInfo();
     }, [])
   );
+
+  const getInfo = () => {
+    getLibraries().then((libraries) => {
+      libraries.sort((a, b) => (a.books.length > b.books.length) ? -1 : ((b.books.length > a.books.length) ? 1 : 0));
+      setLibraries(libraries);
+    });
+    getBooks().then((books) => setBooks(books));
+  }
 
   const handleLibraryPress = (library) => {
     console.log("Library pressed:", library);
@@ -44,6 +49,8 @@ export default function Libraries() {
       <HomeBar />
       <FlatList
         style={styles.list}
+        onRefresh={ () => { setRefresh(true); getInfo(); setRefresh(false); } }
+        refreshing={refresh} 
         data={libraries}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handleLibraryPress(item)}>
