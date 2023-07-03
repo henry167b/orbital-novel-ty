@@ -82,7 +82,7 @@ export async function search(query) {
         const book = {
           title: items[i].getElementsByTagName('TitleName')[0].textContent,
           author: items[i].getElementsByTagName('Author')[0].textContent,
-          isbn: items[i].getElementsByTagName('ISBN')[0].textContent,
+          isbn: items[i].getElementsByTagName('ISBN')[0].textContent.split(' ')[0],
           publishyear: items[i].getElementsByTagName('PublishYear')[0].textContent
         };
   
