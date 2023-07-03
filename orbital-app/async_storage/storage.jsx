@@ -10,7 +10,7 @@ const librariesObject = [
   { name: 'Lee Kong Chian Reference Library', location: '100 Victoria Street Singapore 188064', books: [] },
   { name: 'Ang Mo Kio Public Library', location: '4300 Ang Mo Kio Avenue 6 Singapore 569842', books: [] },
   { name: 'Bukit Batok Public Library', location: '1 Bukit Batok Central Link West Mall #03-01 Singapore 658713', books: [] },
-  { name: 'Bukit Panjang Public Library ', location: '1 Jelebu Road Bukit Panjang Plaza #04-04 & 16/17 Singapore 677743', books: [] },
+  { name: 'Bukit Panjang Public Library', location: '1 Jelebu Road Bukit Panjang Plaza #04-04 & 16/17 Singapore 677743', books: [] },
   { name: 'Central Public Library', location: '100 Victoria Street National Library Board Singapore 188064', books: [] },
   { name: 'Cheng San Public Library', location: '90 Hougang Avenue 10 Hougang Mall #03-11 Singapore 538766', books: [] },
   { name: 'Choa Chu Kang Public Library', location: '21 Choa Chu Kang Ave 4 Lot One Shoppers Mall #04-01/02 and #05-06 Singapore 689812', books: [] },
@@ -29,7 +29,7 @@ const librariesObject = [
   { name: 'Library@Esplanade', location: '8 Raffles Avenue #03-01 Singapore 039802', books: [] },
   { name: 'Pasir Ris Public Library', location: '1 Pasir Ris Central St 3 White Sands #04-01/06 Singapore 518457', books: [] },
   { name: 'Bishan Public Library', location: '5 Bishan Place #01-01 Singapore 579841', books: [] },  
-  { name: 'HarbourFront Public Library', location: '1 Harbourfront Walk VivoCity #03-05 (Lobby F) Singapore 098585', books: [] },
+  { name: 'library@harbourfront', location: '1 Harbourfront Walk VivoCity #03-05 (Lobby F) Singapore 098585', books: [] },
   { name: 'Punggol Regional Library', location: '1 Punggol Drive One Punggol #01-12 Singapore 828629', books: [] }
 ]
 
@@ -46,10 +46,12 @@ export const addBook = async (ISBN) => {
     getAvailability(ISBN).then( locations => {
       for (let i = 0; i < locations.length; i++) {
         const library = libraries.find(element => element.name == locations[i]);
-        if (!library.books.includes(ISBN)) { library.books[library.books.length] = ISBN }
+
+        if (library != null && !library.books.includes(ISBN)) { library.books.push(ISBN);}
       }
-  
+      
       AsyncStorage.setItem("@libraries", JSON.stringify(libraries));
+ 
     })
   } catch (e) {
     console.log(e);
