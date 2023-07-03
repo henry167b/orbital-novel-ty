@@ -3,7 +3,7 @@ import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "re
 import { View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getAvailability, search } from "../../nlb_api/nlb";
+import { getAvailability, search , getTitleDetails} from "../../nlb_api/nlb";
 import { addBook } from "../../async_storage/storage";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { Animated } from "react-native";
@@ -13,7 +13,7 @@ function Search({ searchNLB }) {
 
   return (
     <Searchbar
-      placeholder="Search on Novel-ty"
+      placeholder="Search keywords or ISBN"
       onChangeText={setSearchQuery}
       value={searchQuery}
       style={styles.searchbar}
@@ -77,7 +77,13 @@ export default function FindABook() {
   const [showSearch, setShowSearch] = useState(false);
 
   const searchNLB = (query) => {
-    search(query).then((res) => {
+    if ((query.length == 10 || query.length == 13) && /^\d+$/.test(query)) {
+      getTitleDetails(query).then(res => {
+        setData(res);
+        setShowSearch(true);
+      })
+    }
+    search(query).then(res => {
       setData(res);
       setShowSearch(true);
     });

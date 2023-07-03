@@ -34,6 +34,11 @@ function WishList() {
       getBooks().then(books => setData(books));
     }, []));
 
+  useEffect( () => {
+    setReload(false);
+    getBooks().then(books => setData(books));
+  }, [reload]);
+
   return (
     <View>
       <FlatList
