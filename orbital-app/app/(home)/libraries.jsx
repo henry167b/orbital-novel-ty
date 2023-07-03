@@ -1,9 +1,9 @@
-import { FlatList, View, StyleSheet } from "react-native";
-import { Surface, Text, Card, Button, Appbar } from "react-native-paper";
+import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Surface, Text, Card, Button, Appbar, Modal } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { storeDefaults, getLibraries, getBooks } from "../../async_storage/storage";
 import { useFocusEffect } from "expo-router";
 
@@ -18,26 +18,73 @@ function HomeBar() {
 export default function Libraries() {
   const [libraries, setLibraries] = useState([]);
   const [books, setBooks] = useState([]);
+  const [selectedLibrary, setSelectedLibrary] = useState(null); // To keep track of the selected library
 
-  useFocusEffect( 
-    useCallback( () => {
-      getLibraries().then(libraries => {
+  useFocusEffect(
+    useCallback(() => {
+      getLibraries().then((libraries) => {
         libraries.sort((a, b) => (a.books.length > b.books.length) ? -1 : ((b.books.length > a.books.length) ? 1 : 0));
         setLibraries(libraries);
       });
-      getBooks().then(books => setBooks(books));
-    }, []));
+      getBooks().then((books) => setBooks(books));
+    }, [])
+  );
+
+  const handleLibraryPress = (library) => {
+    console.log("Library pressed:", library);
+    setSelectedLibrary(library); // Set the selected library when it is pressed
+  };
+
+  const closeModal = () => {
+    setSelectedLibrary(null); // Clear the selected library when closing the modal
+  };
 
   return (
     <View style={styles.container}>
       <HomeBar />
       <FlatList
-      style={styles.list}
-      data={ libraries }
-      renderItem={({ item }) => <Library lib={ item } books={books.length}/>}
+        style={styles.list}
+        data={libraries}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handleLibraryPress(item)}>
+            <Library lib={item} books={books.length} />
+          </TouchableOpacity>
+        )}
       />
+
+      <Modal visible={selectedLibrary !== null} onDismiss={closeModal}>
+        <Card style={styles.modalContainer}>
+          <Card.Title title={selectedLibrary?.name} />
+          <Card.Content>
+            <Text>Address: {selectedLibrary?.location}</Text>
+            <Text></Text>
+            <Text>Books Present:</Text>
+            <FlatList
+            data={books}
+            renderItem={({item}) => <BookInLibrary book={item} extraData={selectedLibrary?.books} />}
+            />
+          </Card.Content>
+          <Card.Actions>
+            <Button onPress={closeModal}>Close</Button>
+          </Card.Actions>
+        </Card>
+      </Modal>
     </View>
   );
+}
+
+function BookInLibrary({ book, extraData }) {
+  const [avail, setAvail] = useState(false);
+
+  useEffect( () => {
+    if (extraData?.some(b => b.title == book.title)) {
+      setAvail(true);
+    }
+  }, [book, extraData]);
+
+  return (
+    <Text style={avail ? styles.bookAvail : styles.bookUnavail}>{book.title}</Text>
+  )
 }
 
 function Library({ lib, books }) {
@@ -89,5 +136,17 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'white',
     padding: 10
+  },
+  modalContainer: {
+    backgroundColor: 'white',
+    margin: 20,
+    padding: 20,
+    borderRadius: 10,
+  },
+  bookAvail: {
+    color: 'black'
+  },
+  bookUnavail: {
+    color: 'gray'
   }
-})
+});
