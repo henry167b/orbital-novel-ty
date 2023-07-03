@@ -57,7 +57,9 @@ export default function Libraries() {
           <Card.Title title={selectedLibrary?.name} />
           <Card.Content>
             <Text>Address: {selectedLibrary?.location}</Text>
-            {/* Add other details */}
+            <Text></Text>
+            <Text>Books Present:</Text>
+            <Text>{selectedLibrary?.books}</Text>
           </Card.Content>
           <Card.Actions>
             <Button onPress={closeModal}>Close</Button>
