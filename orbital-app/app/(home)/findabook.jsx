@@ -25,73 +25,20 @@ function Search({ searchNLB }) {
 }
 
 function Bookbox({ book }) {
-  const translateX = new Animated.Value(0);
-  const panGestureHandler = Animated.event([{ nativeEvent: { translationX: translateX } }], {
-    useNativeDriver: true,
-  });
-
-  const handlePanStateChange = (event) => {
-    if (event.nativeEvent.state === State.END) {
-      if (event.nativeEvent.translationX < -80) { // Check if the gesture is towards the left
-        Animated.timing(translateX, {
-          toValue: -100,
-          duration: 300,
-          useNativeDriver: true,
-        }).start();
-      } if (-80 >= event.nativeEvent.translationX <= 0) { // Check if the gesture is towards the left
-          Animated.timing(translateX, {
-            toValue: 0,
-            duration: 300,
-            useNativeDriver: true,
-          }).start();
-
-      } if (event.nativeEvent.translationX > 0) { // Check if the gesture is towards the right
-        Animated.timing(translateX, {
-          toValue: 0,
-          duration: 0,
-          useNativeDriver: true,
-        }).start();
-      }
-    }
-  };
-  const [showAddButton, setShowAddButton] = useState(false)
-
-  useEffect(() => {
-    const listener = translateX.addListener(({ value }) => {
-      setShowAddButton(value === - 100);
-    });
-    return () => {
-      translateX.removeListener(listener);
-    };
-  }, [translateX]);
-
   const handleAddtoWishList = () => {
-    addBook(book.isbn)
+    addBook(book.isbn);
     console.log("ISBN:", book.isbn); // to be removed afterwards
   };
 
   return (
-    <PanGestureHandler
-      onGestureEvent={panGestureHandler}
-      onHandlerStateChange={handlePanStateChange}
-    >
-      <Animated.View
-        style={[
-          styles.book,
-          {
-            transform: [{ translateX: translateX }],
-          },
-        ]}
-      >
-        <Text>Title: {book.title}</Text>
-        <Text>Author: {book.author}</Text>
-        <Text>ISBN: {book.isbn}</Text>
-        {true && ( //should change to showAddButton && or something
-          <LogButton onPress={handleAddtoWishList} text="Add to Wish List" />
-        )}
-      </Animated.View>
-    </PanGestureHandler>
-
+    <View style={styles.book}>
+      <Text>Title: {book.title}</Text>
+      <Text>Author: {book.author}</Text>
+      <Text>ISBN: {book.isbn}</Text>
+      {true && (
+        <LogButton onPress={handleAddtoWishList} text="Add to Wish List" />
+      )}
+    </View>
   );
 }
 
