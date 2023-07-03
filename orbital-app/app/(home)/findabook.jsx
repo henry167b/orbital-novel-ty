@@ -1,6 +1,6 @@
 import { useFocusEffect, useRouter } from "expo-router";
 import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "react-native-paper";
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAvailability, search } from "../../nlb_api/nlb";
@@ -32,25 +32,43 @@ function Bookbox({ book }) {
 
   const handlePanStateChange = (event) => {
     if (event.nativeEvent.state === State.END) {
-      if (event.nativeEvent.translationX < -80) {
+      if (event.nativeEvent.translationX < -80) { // Check if the gesture is towards the left
         Animated.timing(translateX, {
-          toValue: -80,
+          toValue: -100,
           duration: 300,
           useNativeDriver: true,
         }).start();
-      } else {
+      } if (-80 >= event.nativeEvent.translationX <= 0) { // Check if the gesture is towards the left
+          Animated.timing(translateX, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true,
+          }).start();
+
+      } if (event.nativeEvent.translationX > 0) { // Check if the gesture is towards the right
         Animated.timing(translateX, {
           toValue: 0,
           duration: 0,
           useNativeDriver: true,
         }).start();
       }
-    } else if (event.nativeEvent.translationX > 0) {
-      translateX.setValue(0);
     }
   };
-  
-  
+  const [showAddButton, setShowAddButton] = useState(false)
+
+  useEffect(() => {
+    const listener = translateX.addListener(({ value }) => {
+      setShowAddButton(value === - 100);
+    });
+    return () => {
+      translateX.removeListener(listener);
+    };
+  }, [translateX]);
+
+  const handleAddtoWishList = () => {
+    console.log("ISBN:", book.isbn);
+  };
+
   return (
     <PanGestureHandler
       onGestureEvent={panGestureHandler}
@@ -67,8 +85,12 @@ function Bookbox({ book }) {
         <Text>Title: {book.title}</Text>
         <Text>Author: {book.author}</Text>
         <Text>ISBN: {book.isbn}</Text>
+        {true && ( //should change to showAddButton && or something
+          <LogButton onPress={handleAddtoWishList} text="Add to Wish List" />
+        )}
       </Animated.View>
     </PanGestureHandler>
+
   );
 }
 
@@ -130,6 +152,15 @@ export default function FindABook() {
   );
 }
 
+
+function LogButton({ onPress, text }) {
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.button}>
+      <Text style={styles.buttonText}>{text}</Text>
+    </TouchableOpacity>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -182,5 +213,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 4, // for Android 
-  }
+  },
+  button: {
+    backgroundColor: "blue",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    marginTop: 10,
+    },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    }
 });
