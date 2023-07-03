@@ -66,7 +66,8 @@ function Bookbox({ book }) {
   }, [translateX]);
 
   const handleAddtoWishList = () => {
-    console.log("ISBN:", book.isbn);
+    addBook(book.isbn)
+    console.log("ISBN:", book.isbn); // to be removed afterwards
   };
 
   return (
@@ -151,7 +152,6 @@ export default function FindABook() {
     </SafeAreaView>
   );
 }
-
 
 function LogButton({ onPress, text }) {
   return (
