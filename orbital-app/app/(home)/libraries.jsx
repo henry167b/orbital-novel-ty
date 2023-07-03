@@ -59,7 +59,10 @@ export default function Libraries() {
             <Text>Address: {selectedLibrary?.location}</Text>
             <Text></Text>
             <Text>Books Present:</Text>
-            <Text>{selectedLibrary?.books}</Text>
+            <FlatList
+            data={books}
+            renderItem={({item}) => <BookInLibrary book={item} extraData={selectedLibrary?.books} />}
+            />
           </Card.Content>
           <Card.Actions>
             <Button onPress={closeModal}>Close</Button>
@@ -70,11 +73,24 @@ export default function Libraries() {
   );
 }
 
+function BookInLibrary({ book, extraData }) {
+  const [avail, setAvail] = useState(false);
+
+  useEffect( () => {
+    if (extraData?.some(b => b.title == book.title)) {
+      setAvail(true);
+    }
+  }, [book, extraData]);
+
+  return (
+    <Text style={avail ? styles.bookAvail : styles.bookUnavail}>{book.title}</Text>
+  )
+}
+
 function Library({ lib, books }) {
   return (
     <View style={styles.library}>
       <Card style={styles.surface} mode="elevated">
-        <Text></Text>
         <Text>{lib.name}</Text>
         <Text></Text>
         <Text>Address: {lib.location}</Text>
@@ -127,4 +143,10 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
   },
+  bookAvail: {
+    color: 'black'
+  },
+  bookUnavail: {
+    color: 'gray'
+  }
 });

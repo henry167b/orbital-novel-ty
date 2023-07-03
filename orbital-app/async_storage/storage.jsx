@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAvailability } from "../nlb_api/nlb";
 
-const booksObject = [''];
+const booksObject = [];
 
 const librariesObject = [
   { name: 'Tampines Regional Library', location: '1 Tampines Walk Our Tampines Hub #02-01 Singapore 528523', books: [] },
@@ -33,11 +33,15 @@ const librariesObject = [
   { name: 'Punggol Regional Library', location: '1 Punggol Drive One Punggol #01-12 Singapore 828629', books: [] }
 ]
 
-export const addBook = async (ISBN) => {
+export const addBook = async (book) => {
   try {
+    const ISBN = book.isbn;
+
     const jsonBooks = await AsyncStorage.getItem("@books");
     const books = JSON.parse(jsonBooks);
-    if (!books.includes(ISBN)) { books[books.length] = ISBN }
+    if (books.some(b => b.isbn == ISBN)) { return }
+    books.push(book)
+
     AsyncStorage.setItem("@books", JSON.stringify(books));
 
     const jsonLibs = await AsyncStorage.getItem("@libraries");
@@ -47,14 +51,13 @@ export const addBook = async (ISBN) => {
       for (let i = 0; i < locations.length; i++) {
         const library = libraries.find(element => element.name == locations[i]);
 
-        if (library != null && !library.books.includes(ISBN)) { library.books.push(ISBN);}
+        if (library != null && !library.books.some(b => b.isbn == ISBN)) { library.books.push(book) }
       }
-      
       AsyncStorage.setItem("@libraries", JSON.stringify(libraries));
  
     })
   } catch (e) {
-    console.log(e);
+    console.log(e );
   }
 }
 

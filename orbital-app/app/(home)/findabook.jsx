@@ -26,7 +26,7 @@ function Search({ searchNLB }) {
 
 function Bookbox({ book }) {
   const handleAddtoWishList = () => {
-    addBook(book.isbn);
+    addBook(book);
     console.log("ISBN:", book.isbn); // to be removed afterwards
   };
 
@@ -82,11 +82,12 @@ export default function FindABook() {
         setData(res);
         setShowSearch(true);
       })
+    } else {
+      search(query).then(res => {
+        setData(res);
+        setShowSearch(true);
+      });
     }
-    search(query).then(res => {
-      setData(res);
-      setShowSearch(true);
-    });
   };
 
   useFocusEffect(
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     backgroundColor: "#F3F6F8",
+    width: '80%',
     borderRadius: 10,
     marginHorizontal: 35,
     marginVertical: 25,

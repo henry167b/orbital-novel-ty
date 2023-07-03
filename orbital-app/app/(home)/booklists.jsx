@@ -18,7 +18,9 @@ function Book({ book, stateChanger }) {
   return (
     <View style={styles.book}>
       <View>
-        <Text>ISBN: {book}</Text>
+        <Text>Title: {book.title}</Text>
+        <Text>Author: {book.author}</Text>
+        <Text>ISBN: {book.isbn}</Text>
       </View>
       <Button mode='contained' onPress={() => { removeBook(book).then(e => stateChanger(true)) }}>Remove</Button>
     </View>
