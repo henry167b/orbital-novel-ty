@@ -78,7 +78,7 @@ export default function FindABook() {
 
   const searchNLB = (query) => {
     if ((query.length == 10 || query.length == 13) && /^\d+$/.test(query)) {
-      getTitleDetails(query).then(res => {
+      getTitleDetails('', query).then(res => {
         setData(res);
         setShowSearch(true);
       })
