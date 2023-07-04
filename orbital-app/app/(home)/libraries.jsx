@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   surface: {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    borderRadius: 10,
+    borderRadius: 5,
     width: '85%',
     height: '100%',
     backgroundColor: 'white',
@@ -148,12 +148,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     margin: 20,
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 5,
   },
   bookAvail: {
-    color: 'black'
+    color: 'black',
+    paddingVertical: 5
   },
   bookUnavail: {
-    color: 'gray'
+    color: 'gray',
+    paddingVertical: 5
   }
 });
