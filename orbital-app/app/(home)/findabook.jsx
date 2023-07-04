@@ -79,6 +79,7 @@ function RecentSearches() {
   return (
     <View style={styles.recentSearches}>
       <Text>RECENT SEARCHES</Text>
+      <Text></Text> 
       <FlatList
         data={recentSearches}
         keyExtractor={(item, index) => index.toString()}

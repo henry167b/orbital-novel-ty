@@ -119,10 +119,17 @@ export const addRecentSearch = async (searchQuery) => {
   try {
     const jsonValue = await AsyncStorage.getItem('@recentSearches');
     let recentSearches = [];
+
     if (jsonValue != null) {
       recentSearches = JSON.parse(jsonValue);
     }
-    recentSearches.push(searchQuery);
+
+    // Add the new search query to the beginning of the array
+    recentSearches.unshift(searchQuery);
+
+    // Limit the array to store up to three objects
+    recentSearches = recentSearches.slice(0, 3);
+
     await AsyncStorage.setItem('@recentSearches', JSON.stringify(recentSearches));
   } catch (e) {
     console.log(e);
