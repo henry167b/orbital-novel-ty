@@ -144,9 +144,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   bookAvail: {
-    color: 'black'
+    color: 'black',
+    paddingVertical: 5
   },
   bookUnavail: {
-    color: 'gray'
+    color: 'gray',
+    paddingVertical: 5
   }
 });
