@@ -112,3 +112,31 @@ export const storeDefaults = async () => {
     console.log(e);
   }
 };
+
+//new shit below
+
+export const addRecentSearch = async (searchQuery) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@recentSearches');
+    let recentSearches = [];
+    if (jsonValue != null) {
+      recentSearches = JSON.parse(jsonValue);
+    }
+    recentSearches.push(searchQuery);
+    await AsyncStorage.setItem('@recentSearches', JSON.stringify(recentSearches));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getRecentSearches = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@recentSearches');
+    if (jsonValue != null) {
+      const parsedData = JSON.parse(jsonValue);
+      return parsedData;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};

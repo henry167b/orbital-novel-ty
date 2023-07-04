@@ -7,9 +7,17 @@ import { getAvailability, search , getTitleDetails} from "../../nlb_api/nlb";
 import { addBook } from "../../async_storage/storage";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { Animated } from "react-native";
+import { addRecentSearch } from "../../async_storage/storage";
+import { getRecentSearches } from "../../async_storage/storage";
+
 
 function Search({ searchNLB }) {
   const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    searchNLB(searchQuery);
+    addRecentSearch(searchQuery); // Add search query to recent searches
+  };
 
   return (
     <Searchbar
@@ -17,8 +25,8 @@ function Search({ searchNLB }) {
       onChangeText={setSearchQuery}
       value={searchQuery}
       style={styles.searchbar}
-      onIconPress={() => searchNLB(searchQuery)}
-      onSubmitEditing={() => searchNLB(searchQuery)}
+      onIconPress={handleSearch}
+      onSubmitEditing={handleSearch}
       mode="bar"
     />
   );
@@ -57,9 +65,25 @@ function Searchresults({ data }) {
 }
 
 function RecentSearches() {
+  const [recentSearches, setRecentSearches] = useState([]);
+
+  useEffect(() => {
+    fetchRecentSearches();
+  }, []);
+
+  const fetchRecentSearches = async () => {
+    const searches = await getRecentSearches();
+    setRecentSearches(searches);
+  };
+
   return (
     <View style={styles.recentSearches}>
       <Text>RECENT SEARCHES</Text>
+      <FlatList
+        data={recentSearches}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => <Text>{item}</Text>}
+      />
     </View>
   );
 }
