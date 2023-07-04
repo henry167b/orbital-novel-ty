@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
     borderWidth: 0,
-    borderRadius: 8,
+    borderRadius: 5,
     margin: 10,
     marginTop: 10,
     shadowColor: "black",
@@ -170,10 +170,10 @@ const styles = StyleSheet.create({
     elevation: 4, // for Android 
   },
   button: {
-    backgroundColor: "blue",
+    backgroundColor: "#0D98C0",
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderRadius: 5,
+    borderRadius: 500,
     marginTop: 10,
     },
   buttonText: {
