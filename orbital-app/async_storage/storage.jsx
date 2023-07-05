@@ -59,6 +59,42 @@ export const addBook = async (book) => {
   }
 }
 
+export const addManyBooks = async (books) => {
+  try {
+    const jsonBooks = await AsyncStorage.getItem("@books");
+    const booksStorage = JSON.parse(jsonBooks);
+
+    for (let i = 0; i < books.length; i++) {
+      const bk = books[i];
+      if (booksStorage.some(b => b.isbn == bk.isbn)) {
+        books.splice(i, 1);
+        continue;
+      }
+      booksStorage.push(bk);
+    }
+
+    await AsyncStorage.setItem("@books", JSON.stringify(books));
+
+    const jsonLibs = await AsyncStorage.getItem("@libraries");
+    const libraries = JSON.parse(jsonLibs);
+
+    await Promise.all(
+      books.map( async bk => { 
+        const locations = await getAvailability(bk.isbn);
+        for (let i = 0; i < locations.length; i++) {
+          const library = libraries.find(element => element.name == locations[i]);
+  
+          if (library != null && !library.books.some(b => b.isbn == bk.ISBN)) { library.books.push(bk) }
+        }
+      }));
+
+    await AsyncStorage.setItem("@libraries", JSON.stringify(libraries));
+
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export const removeBook = async (book) => {
   try {
     const ISBN = book.isbn;

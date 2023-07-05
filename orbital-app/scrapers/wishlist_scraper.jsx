@@ -3,16 +3,16 @@ import { View } from "react-native";
 import { getTitleDetails } from "../nlb_api/nlb";
 import { WebView } from "react-native-webview";
 import { useAuth } from "../contexts/auth"
-import { addBook } from "../async_storage/storage";
+import { addBook, addManyBooks } from "../async_storage/storage";
 
 async function handleParsedBooks(data) {
   const BRNs = data.filter(Number);
-  console.log(BRNs);
 
-  for (let i = 0; i < BRNs.length; i++) {
-    const res = await getTitleDetails(BRNs[i], '');
-    await addBook(res[0]);
-  }
+  Promise.all(
+    BRNs.map( async b => {
+      return await getTitleDetails(b, '').then(res => res[0]); 
+    })
+  ).then(res => addManyBooks(res));
 }
 
 export function WishListScraperWebView() {
@@ -27,12 +27,19 @@ export function WishListScraperWebView() {
   `;
 
   const injectParseScript = `
-    const result = Array.prototype.slice.call(document.getElementsByClassName('item-title-value')).map(e => e.href.split('BRN=').pop());
-    window.ReactNativeWebView.postMessage(JSON.stringify(result));
-    const next = document.getElementsByClassName('page-item')[3];
-    if (next && !next.classList.contains('disabled')) {
+    const result = [];
+    const loop = setInterval(function() {
+      const curr = Array.prototype.slice.call(document.getElementsByClassName('item-title-value')).map(e => e.href.split('BRN=').pop());
+      result.push(...curr);
+      const next = document.getElementsByClassName('page-item')[3];
+      if (next && !next.classList.contains('disabled')) {
         next.firstElementChild.click();
-    }
+      } else {
+        clearInterval(loop);
+        window.ReactNativeWebView.postMessage(JSON.stringify(result));
+      }
+    }, 1500);
+  
     true;
   `;
 
@@ -45,7 +52,6 @@ export function WishListScraperWebView() {
         this.webref.injectJavaScript(injectParseScript);
       }, 2000);
     }
-    console.log("load end");
   };
 
   return (

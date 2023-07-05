@@ -72,7 +72,6 @@ export async function getTitleDetails(BID, ISBN) {
       isbn: doc.getElementsByTagName('ISBN')[0].textContent.split(' ')[0],
       publishyear: ''
    };
-
    books.push(book);
    return books;
 }
