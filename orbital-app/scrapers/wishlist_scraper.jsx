@@ -8,9 +8,10 @@ import { addBook } from "../async_storage/storage";
 async function handleParsedBooks(data) {
   const BRNs = data.filter(Number);
   console.log(BRNs);
-  const book = null;
+
   for (let i = 0; i < BRNs.length; i++) {
-    await getTitleDetails(BRNs[i], '').then(res => { addBook(res[0]).then(console.log(res)) });
+    const res = await getTitleDetails(BRNs[i], '');
+    await addBook(res[0]);
   }
 }
 

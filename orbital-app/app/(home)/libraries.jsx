@@ -1,4 +1,4 @@
-import { FlatList, View, StyleSheet, TouchableOpacity, RefreshControl } from "react-native";
+import { FlatList, View, StyleSheet, TouchableOpacity, RefreshControl, ScrollView } from "react-native";
 import { Surface, Text, Card, Button, Appbar, Modal } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from '@expo/vector-icons';
@@ -59,24 +59,21 @@ export default function Libraries() {
         )}
       />
 
-      <Modal visible={selectedLibrary !== null} onDismiss={closeModal}>
-        <Card style={styles.modalContainer}>
-          <Card.Title title={selectedLibrary?.name} />
-          <Card.Content>
-            <Text>Address: {selectedLibrary?.location}</Text>
-            <Text></Text>
-            <Text>Books Present:</Text>
-            <FlatList
-            data={books}
-            renderItem={({item}) => <BookInLibrary book={item} extraData={selectedLibrary?.books} />}
-            />
-          </Card.Content>
-          <Card.Actions>
-            <Button onPress={closeModal}>Close</Button>
-          </Card.Actions>
-        </Card>
-      </Modal>
-    </View>
+    <Modal visible={selectedLibrary !== null} onDismiss={closeModal} style={{alignItems: 'center'}}>
+            <View style={styles.modalContainer}>
+              <Card.Title title={selectedLibrary?.name} />
+              <FlatList
+                style={styles.bookList}
+                data={books}
+                renderItem={({ item }) => <BookInLibrary book={item} extraData={selectedLibrary?.books} />}
+                keyExtractor={(item, index) => index.toString()}
+              />
+              <Card.Actions>
+                <Button onPress={closeModal}>Close</Button>
+              </Card.Actions>
+            </View>
+          </Modal>
+        </View>
   );
 }
 
@@ -146,9 +143,17 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: 'white',
+    width: '85%',
+    height: '70%',
     margin: 20,
     padding: 20,
     borderRadius: 5,
+  },
+  bookList:{
+    flex: 1,
+  },
+  scrollView: {
+    maxHeight: 200,
   },
   bookAvail: {
     color: 'black',

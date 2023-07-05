@@ -39,24 +39,23 @@ export const addBook = async (book) => {
     const jsonBooks = await AsyncStorage.getItem("@books");
     const books = JSON.parse(jsonBooks);
     if (books.some(b => b.isbn == ISBN)) { return }
-    books.push(book)
+    books.push(book);
 
-    AsyncStorage.setItem("@books", JSON.stringify(books));
+    await AsyncStorage.setItem("@books", JSON.stringify(books));
 
     const jsonLibs = await AsyncStorage.getItem("@libraries");
     const libraries = JSON.parse(jsonLibs);
 
-    getAvailability(ISBN).then( locations => {
+    await getAvailability(ISBN).then( locations => {
       for (let i = 0; i < locations.length; i++) {
         const library = libraries.find(element => element.name == locations[i]);
 
         if (library != null && !library.books.some(b => b.isbn == ISBN)) { library.books.push(book) }
       }
-      AsyncStorage.setItem("@libraries", JSON.stringify(libraries));
- 
     })
+    await AsyncStorage.setItem("@libraries", JSON.stringify(libraries));
   } catch (e) {
-    console.log(e );
+    console.log(e);
   }
 }
 
@@ -108,6 +107,41 @@ export const getLibraries = async () => {
 export const storeDefaults = async () => {
   try {
     await AsyncStorage.multiSet([["@libraries", JSON.stringify(librariesObject)], ["@books", JSON.stringify(booksObject)]]);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//new shit below
+
+export const addRecentSearch = async (searchQuery) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@recentSearches');
+    let recentSearches = [];
+
+    if (jsonValue != null) {
+      recentSearches = JSON.parse(jsonValue);
+    }
+
+    // Add the new search query to the beginning of the array
+    recentSearches.unshift(searchQuery);
+
+    // Limit the array to store up to three objects
+    recentSearches = recentSearches.slice(0, 3);
+
+    await AsyncStorage.setItem('@recentSearches', JSON.stringify(recentSearches));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getRecentSearches = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@recentSearches');
+    if (jsonValue != null) {
+      const parsedData = JSON.parse(jsonValue);
+      return parsedData;
+    }
   } catch (e) {
     console.log(e);
   }
