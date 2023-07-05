@@ -39,24 +39,23 @@ export const addBook = async (book) => {
     const jsonBooks = await AsyncStorage.getItem("@books");
     const books = JSON.parse(jsonBooks);
     if (books.some(b => b.isbn == ISBN)) { return }
-    books.push(book)
+    books.push(book);
 
-    AsyncStorage.setItem("@books", JSON.stringify(books));
+    await AsyncStorage.setItem("@books", JSON.stringify(books));
 
     const jsonLibs = await AsyncStorage.getItem("@libraries");
     const libraries = JSON.parse(jsonLibs);
 
-    getAvailability(ISBN).then( locations => {
+    await getAvailability(ISBN).then( locations => {
       for (let i = 0; i < locations.length; i++) {
         const library = libraries.find(element => element.name == locations[i]);
 
         if (library != null && !library.books.some(b => b.isbn == ISBN)) { library.books.push(book) }
       }
-      AsyncStorage.setItem("@libraries", JSON.stringify(libraries));
- 
     })
+    await AsyncStorage.setItem("@libraries", JSON.stringify(libraries));
   } catch (e) {
-    console.log(e );
+    console.log(e);
   }
 }
 

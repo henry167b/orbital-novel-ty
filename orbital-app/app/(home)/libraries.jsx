@@ -59,7 +59,7 @@ export default function Libraries() {
         )}
       />
 
-    <Modal visible={selectedLibrary !== null} onDismiss={closeModal}>
+    <Modal visible={selectedLibrary !== null} onDismiss={closeModal} style={{alignItems: 'center'}}>
             <View style={styles.modalContainer}>
               <Card.Title title={selectedLibrary?.name} />
               <FlatList
@@ -143,8 +143,8 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: 'white',
-    width: 350,
-    height: 300,
+    width: '85%',
+    height: '70%',
     margin: 20,
     padding: 20,
     borderRadius: 5,

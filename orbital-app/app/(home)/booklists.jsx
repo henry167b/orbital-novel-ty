@@ -48,7 +48,7 @@ function WishList() {
   return (
     <View>
       <FlatList
-      style={{ width: '100%' }}
+      style={{ width: '100%', marginBottom: 175 }}
       data={ data }
       renderItem={({ item }) => <Book book={item} stateChanger={setReload} />}
       />
