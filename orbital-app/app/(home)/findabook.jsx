@@ -64,7 +64,7 @@ function Searchresults({ data }) {
   );
 }
 
-function RecentSearches() {
+function RecentSearches({ searchNLB, setSearchQuery }) {
   const [recentSearches, setRecentSearches] = useState([]);
 
   useEffect(() => {
@@ -76,14 +76,26 @@ function RecentSearches() {
     setRecentSearches(searches);
   };
 
+  const handleRecentSearch = (searchQuery) => {
+    setSearchQuery(searchQuery); // Set the search query in the state
+    searchNLB(searchQuery); // Trigger the search with the updated query
+  };
+
   return (
     <View style={styles.recentSearches}>
       <Text>RECENT SEARCHES</Text>
-      <Text></Text> 
+      <Text></Text>
       <FlatList
         data={recentSearches}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <Text>{item}</Text>}
+        renderItem={({ item }) => (
+          <TouchableOpacity 
+          onPress={() => handleRecentSearch(item)}
+          style={styles.recentSearchButtonContainer}
+          >
+            <Text style={styles.recentSearchButton}>{item}</Text>
+          </TouchableOpacity>
+        )}
       />
     </View>
   );
@@ -100,6 +112,7 @@ function Recommended() {
 export default function FindABook() {
   const [data, setData] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const searchNLB = (query) => {
     if ((query.length == 10 || query.length == 13) && /^\d+$/.test(query)) {
@@ -123,10 +136,12 @@ export default function FindABook() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Search searchNLB={searchNLB} />
+      <Search searchNLB={searchNLB} setSearchQuery={setSearchQuery}/>
       <Divider style={{ width: '100%' }} />
       {showSearch && <Searchresults data={data} />}
-      {!showSearch && <RecentSearches />}
+      {!showSearch && (
+        <RecentSearches searchNLB={searchNLB} setSearchQuery={setSearchQuery} />
+      )}
       {!showSearch && <Recommended />}
     </SafeAreaView>
   );
@@ -161,7 +176,27 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: '100%',
     paddingHorizontal: 35,
+    paddingBottom: 20,
     paddingTop: 20
+  },
+  recentSearchButton: {
+    fontSize:15,
+    fontWeight: 'bold'
+  },
+  recentSearchButtonContainer: {
+    backgroundColor: '#F3F6F8',
+    borderRadius: 5,
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity:0.25,
+    shadowRadius: 5,
+    elevation: 5,
+    marginBottom:10,
+    margin:5
   },
   recommended: {
     flex: 1,
