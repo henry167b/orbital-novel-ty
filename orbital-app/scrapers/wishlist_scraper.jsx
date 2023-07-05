@@ -19,17 +19,21 @@ export function WishListScraperWebView() {
   const [injectParse, setInjectParse] = useState(false);
 
   const injectLoginScript = `
-      document.getElementById('username').value="` + user + `";
-      document.getElementById('password').value="` + password + `";
-      document.getElementsByName('submit')[0].click();
-      true;
-    `;
+    document.getElementById('username').value="` + user + `";
+    document.getElementById('password').value="` + password + `";
+    document.getElementsByName('submit')[0].click();
+    true;
+  `;
 
   const injectParseScript = `
-      const result = Array.prototype.slice.call(document.getElementsByClassName('item-title-value')).map(e => e.href.split('BRN=').pop());
-      window.ReactNativeWebView.postMessage(JSON.stringify(result));
-      true;
-    `;
+    const result = Array.prototype.slice.call(document.getElementsByClassName('item-title-value')).map(e => e.href.split('BRN=').pop());
+    window.ReactNativeWebView.postMessage(JSON.stringify(result));
+    const next = document.getElementsByClassName('page-item')[3];
+    if (next && !next.classList.contains('disabled')) {
+        next.firstElementChild.click();
+    }
+    true;
+  `;
 
   const handleWebViewLoad = () => {
     if (!injectParse) {
