@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/auth";
 import { Link, Stack, useFocusEffect } from "expo-router";
 import { storeDefaults } from "../../async_storage/storage";
 import { WebView } from "react-native-webview";
-import { WishListScraperWebView } from "../../scrapers/wishlist_scraper";
+import { WishlistScraperWebView } from "../../scrapers/wishlist_scraper";
 
 function HomeBar() {
   return (
@@ -47,7 +47,7 @@ export default function Home() {
     <View style={styles.container}>
       <HomeBar />
       <Content />
-      <WishListScraperWebView />
+      <WishlistScraperWebView />
     </View>
   );
 }

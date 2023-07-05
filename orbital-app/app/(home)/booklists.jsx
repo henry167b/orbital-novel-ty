@@ -21,6 +21,7 @@ function Book({ book, stateChanger }) {
         <Text>Title: {book.title}</Text>
         <Text>Author: {book.author}</Text>
         <Text>ISBN: {book.isbn}</Text>
+        <Text>BID: {book.bid}</Text>
         <Text></Text>
       <Button mode='contained' onPress={() => { removeBook(book).then(e => stateChanger(true)) }}
       style = {styles.removeButton}
