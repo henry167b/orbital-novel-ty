@@ -63,7 +63,6 @@ export default function BookLists() {
   return (
     <View style={styles.container}>
       <HomeBar />
-
       <SegmentedButtons
         style={styles.listTabs}
         value={value}

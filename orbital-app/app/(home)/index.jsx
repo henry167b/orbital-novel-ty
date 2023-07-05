@@ -1,10 +1,12 @@
-import { useEffect,useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar, Text, Button, Surface } from "react-native-paper";
 import { useAuth } from "../../contexts/auth";
 import { Link, Stack, useFocusEffect } from "expo-router";
 import { storeDefaults } from "../../async_storage/storage";
+import { WebView } from "react-native-webview";
+import { WishListScraperWebView } from "../../scrapers/wishlist_scraper";
 
 function HomeBar() {
   return (
@@ -22,6 +24,7 @@ function Content() {
     <View style={styles.content}>
       <Events />
       <Button mode="contained" onPress={() => signOut()}>Sign out</Button>
+      
     </View>
   );
 }
@@ -37,12 +40,14 @@ function Events() {
 export default function Home() {
   useEffect( () => {
     storeDefaults();
-  }, []);
+    
+  }, );
 
   return (
     <View style={styles.container}>
       <HomeBar />
       <Content />
+      <WishListScraperWebView />
     </View>
   );
 }

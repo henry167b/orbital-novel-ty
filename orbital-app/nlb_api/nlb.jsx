@@ -39,7 +39,7 @@ export async function getAvailability(ISBN) {
    return locations;
 }
 
-export async function getTitleDetails(ISBN) {
+export async function getTitleDetails(BID, ISBN) {
    const url = 'https://openweb.nlb.gov.sg/OWS/CatalogueService.svc?singleWsdl';
    const API_KEY = 'RGV2LUlibnU6UEBzc3cwcmQyMDIz';
    const xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cat="http://www.nlb.gov.sg/ws/CatalogueService">
@@ -47,6 +47,7 @@ export async function getTitleDetails(ISBN) {
       <soapenv:Body>
          <cat:GetTitleDetailsRequest>
             <cat:APIKey>` + API_KEY + `</cat:APIKey>
+            <cat:BID>` + BID + `</cat:BID>
             <cat:ISBN>` + ISBN + `</cat:ISBN>
          </cat:GetTitleDetailsRequest>
       </soapenv:Body>
