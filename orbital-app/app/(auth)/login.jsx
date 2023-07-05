@@ -43,7 +43,7 @@ export default function Login() {
   const bypass = () => {
     setUser(user);
     setPassword(password);
-    signIn(user, password);
+    signIn("ibnu2651", "poohpanda26");
   }
 
   const handleSubmit = () => {
@@ -118,7 +118,6 @@ export default function Login() {
         source={{ uri: 'https://www.nlb.gov.sg/mylibrary' }}
         onMessage={ (e) => {
           if (e.nativeEvent.data == "true") {
-            // changed for easier testing
             signIn(user, password);
           } else {
             setErrMsg("Invalid login details");

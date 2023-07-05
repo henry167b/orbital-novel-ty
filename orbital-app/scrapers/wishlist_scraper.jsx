@@ -19,8 +19,8 @@ export function WishListScraperWebView() {
   const [injectParse, setInjectParse] = useState(false);
 
   const injectLoginScript = `
-      document.getElementById('username').value="ibnu2651";
-      document.getElementById('password').value="poohpanda26";
+      document.getElementById('username').value="` + user + `";
+      document.getElementById('password').value="` + password + `";
       document.getElementsByName('submit')[0].click();
       true;
     `;
