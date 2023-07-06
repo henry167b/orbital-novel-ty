@@ -11,7 +11,7 @@ async function handleParsedBooks(data) {
 
   Promise.all(
     BRNs.map( async b => {
-      return await getTitleDetails(b, '').then(res => res[0]); 
+      return await getTitleDetails(b, '').then(res => res[0] ); 
     })
   ).then(res => addManyBooks(res));
 }

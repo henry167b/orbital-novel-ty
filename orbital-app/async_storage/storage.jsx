@@ -84,7 +84,9 @@ export const addManyBooks = async (books) => {
         for (let i = 0; i < locations.length; i++) {
           const library = libraries.find(element => element.name == locations[i]);
   
-          if (library != null && !library.books.some(b => b.isbn == bk.ISBN)) { library.books.push(bk) }
+          if (library != null && !library.books.some(b => b.isbn == bk.isbn)) {
+            library.books.push(bk);
+          }
         }
       }));
 
