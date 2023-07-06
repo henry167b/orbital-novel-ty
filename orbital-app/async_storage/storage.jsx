@@ -140,9 +140,21 @@ export const getLibraries = async () => {
   }
 }
 
-export const storeDefaults = async () => {
+export const hasDefaults = () => {
   try {
-    await AsyncStorage.multiSet([["@libraries", JSON.stringify(librariesObject)], ["@books", JSON.stringify(booksObject)]]);
+    
+    return AsyncStorage.getAllKeys().then(keys => {
+      return keys.includes('@books') && keys.includes('@libraries');
+    });
+    
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export const storeDefaults = () => {
+  try {
+    AsyncStorage.multiSet([["@libraries", JSON.stringify(librariesObject)], ["@books", JSON.stringify(booksObject)]]);
   } catch (e) {
     console.log(e);
   }

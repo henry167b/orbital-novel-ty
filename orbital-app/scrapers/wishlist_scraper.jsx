@@ -7,6 +7,7 @@ import { addBook, addManyBooks } from "../async_storage/storage";
 
 async function handleParsedBooks(data) {
   const BRNs = data.filter(Number);
+  console.log(BRNs);
 
   Promise.all(
     BRNs.map( async b => {

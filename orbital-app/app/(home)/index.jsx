@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar, Text, Button, Surface } from "react-native-paper";
 import { useAuth } from "../../contexts/auth";
 import { Link, Stack, useFocusEffect } from "expo-router";
-import { storeDefaults } from "../../async_storage/storage";
+import { storeDefaults, hasDefaults } from "../../async_storage/storage";
 import { WebView } from "react-native-webview";
 import { WishlistScraperWebView } from "../../scrapers/wishlist_scraper";
 
@@ -39,8 +39,10 @@ function Events() {
 
 export default function Home() {
   useEffect( () => {
-    storeDefaults();
-    
+    // if (!hasDefaults()) {
+      
+      storeDefaults();
+    // }
   }, );
 
   return (
