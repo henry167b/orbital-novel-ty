@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { storeDefaults, getBooks, removeBook } from "../../async_storage/storage";
 import { RemoveFromWishlist } from "../../scrapers/wishlist_scraper";
 import { WebView } from "react-native-webview";
+import { LoanlistScraperWebView } from "../../scrapers/loanlist_scraper";
 
 function HomeBar() {
   return (
@@ -17,10 +18,7 @@ function HomeBar() {
 }
 
 function Book({ book, stateChanger, setBrn }) {
-  const [removeWebView, setRemoveWebView] = useState(false);
-
   const handleRemove = () => {
-    setRemoveWebView(true);
     setBrn(book.bid);
     removeBook(book).then(e => stateChanger(true));
   }
@@ -33,10 +31,10 @@ function Book({ book, stateChanger, setBrn }) {
         <Text>ISBN: {book.isbn}</Text>
         <Text>BID: {book.bid}</Text>
         <Text></Text>
-      <Button mode='contained' onPress={handleRemove}
-      style = {styles.removeButton}
-      buttonColor="#FF4A4A"
-      >Remove</Button>
+        <Button mode='contained' onPress={handleRemove}
+        style = {styles.removeButton}
+        buttonColor="#FF4A4A"
+        >Remove</Button>
       </View>
     </View>
   );
@@ -58,15 +56,45 @@ function WishList({ setBrn }) {
 
   return (
     <View>
-      
       <FlatList
       style={{ width: '100%', marginBottom: 175 }}
       data={ data }
       renderItem={({ item }) => <Book book={item} stateChanger={setReload} setBrn={setBrn} />}
       />
-
     </View>
     
+  );
+}
+
+function LoanBook({book}) {
+  return (
+    <View style={styles.book}>
+      <View>
+        <Text>Title: {book.title}</Text>
+        <Text></Text>
+        <Text>Due date: {book.duedate}</Text>
+      </View>
+    </View>
+  );
+}
+
+function LoanList() {
+  const [data, setData] = useState(null);
+  const [showWebView, setShowWebView] = useState(true);
+
+  useEffect( () => {
+    setShowWebView(!data);
+  }, [data, showWebView]);
+  
+  return (
+    <View>
+      { showWebView && <LoanlistScraperWebView setData={setData} setShowWebView={setShowWebView} /> }
+      <FlatList
+      style={{ width: '100%', marginBottom: 175 }}
+      data={ data }
+      renderItem={({ item }) => <LoanBook book={item} />}
+      />
+    </View>
   );
 }
 
@@ -92,7 +120,7 @@ export default function BookLists() {
             style: {...styles.tab, borderRadius: 5}
           },
           {
-            value: "loans",
+            value: "loanlist",
             label: <Text style={{fontSize: 10}}>LOANS</Text>,
             style: {...styles.tab}
           },
@@ -104,6 +132,7 @@ export default function BookLists() {
         ]} />
       { brn && <RemoveFromWishlist BRN={brn} setBrn={setBrn} /> }
       { value == 'wishlist' && <WishList setBrn={setBrn} />}
+      { value == 'loanlist' && <LoanList /> }
     </View>
   );
 }

@@ -32,8 +32,6 @@ export function WishlistScraperWebView() {
     const loop = setInterval(function() {
       const curr = Array.prototype.slice.call(document.getElementsByClassName('item-title-value')).map(e => e.href.split('BRN=').pop());
       result.push(...curr);
-      clearInterval(loop);
-      window.ReactNativeWebView.postMessage(JSON.stringify(result));
       const next = document.getElementsByClassName('page-item')[3];
       if (next && !next.classList.contains('disabled')) {
         next.firstElementChild.click();
