@@ -5,6 +5,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState, useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { storeDefaults, getBooks, removeBook } from "../../async_storage/storage";
+import { RemoveFromWishlist } from "../../scrapers/wishlist_scraper";
+import { WebView } from "react-native-webview";
 
 function HomeBar() {
   return (
@@ -14,7 +16,15 @@ function HomeBar() {
   );
 }
 
-function Book({ book, stateChanger }) {
+function Book({ book, stateChanger, setBrn }) {
+  const [removeWebView, setRemoveWebView] = useState(false);
+
+  const handleRemove = () => {
+    setRemoveWebView(true);
+    setBrn(book.bid);
+    removeBook(book).then(e => stateChanger(true));
+  }
+
   return (
     <View style={styles.book}>
       <View>
@@ -23,7 +33,7 @@ function Book({ book, stateChanger }) {
         <Text>ISBN: {book.isbn}</Text>
         <Text>BID: {book.bid}</Text>
         <Text></Text>
-      <Button mode='contained' onPress={() => { removeBook(book).then(e => stateChanger(true)) }}
+      <Button mode='contained' onPress={handleRemove}
       style = {styles.removeButton}
       buttonColor="#FF4A4A"
       >Remove</Button>
@@ -32,7 +42,7 @@ function Book({ book, stateChanger }) {
   );
 }
 
-function WishList() {
+function WishList({ setBrn }) {
   const [data, setData] = useState([]);
   const [reload, setReload] = useState(false);
 
@@ -48,11 +58,13 @@ function WishList() {
 
   return (
     <View>
+      
       <FlatList
       style={{ width: '100%', marginBottom: 175 }}
       data={ data }
-      renderItem={({ item }) => <Book book={item} stateChanger={setReload} />}
+      renderItem={({ item }) => <Book book={item} stateChanger={setReload} setBrn={setBrn} />}
       />
+
     </View>
     
   );
@@ -60,6 +72,11 @@ function WishList() {
 
 export default function BookLists() {
   const [value, setValue] = useState('');
+  const [brn, setBrn] = useState('');
+
+  useEffect( () => {
+
+  }, [brn]);
 
   return (
     <View style={styles.container}>
@@ -85,7 +102,8 @@ export default function BookLists() {
             style: {...styles.tab, borderRadius: 5}
           }
         ]} />
-      {value == 'wishlist' && <WishList />}
+      { brn && <RemoveFromWishlist BRN={brn} setBrn={setBrn} /> }
+      { value == 'wishlist' && <WishList setBrn={setBrn} />}
     </View>
   );
 }
