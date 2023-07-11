@@ -50,6 +50,7 @@ export default function Home() {
       <HomeBar />
       <Content />
       <EventScraperWebView />  
+      <WishlistScraperWebView />
     </View>
   );
 }
