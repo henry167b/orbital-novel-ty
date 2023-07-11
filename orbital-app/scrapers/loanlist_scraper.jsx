@@ -41,7 +41,7 @@ export function LoanlistScraperWebView({setData, setShowWebView }) {
     // } else {
       setTimeout(() => {
         this.webref.injectJavaScript(injectParseScript);
-      }, 1000);
+      }, 1500);
     // }
   };
 
