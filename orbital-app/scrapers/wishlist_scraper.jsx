@@ -57,7 +57,7 @@ export function WishlistScraperWebView() {
 
   return (
     // delete style to hide
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 0 }}>
       <WebView
         ref={(r) => (this.webref = r)}
         style={{ flex: 1 }} //change to 0 to hide
