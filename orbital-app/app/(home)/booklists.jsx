@@ -117,17 +117,12 @@ export default function BookLists() {
           {
             value: "wishlist",
             label: <Text style={{fontSize: 10}}>WISH LIST</Text>,
-            style: {...styles.tab, borderRadius: 5}
+            style: {...styles.tab, borderRadius: 20}
           },
           {
             value: "loanlist",
             label: <Text style={{fontSize: 10}}>LOANS</Text>,
-            style: {...styles.tab}
-          },
-          {
-            value: "reservations",
-            label: <Text style={{fontSize: 10}} >RESERVATIONS</Text>,
-            style: {...styles.tab, borderRadius: 5}
+            style: {...styles.tab, borderRadius: 20}
           }
         ]} />
       { brn && <RemoveFromWishlist BRN={brn} setBrn={setBrn} /> }
