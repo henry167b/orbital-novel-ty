@@ -7,6 +7,7 @@ import { Link, Stack, useFocusEffect } from "expo-router";
 import { storeDefaults, hasDefaults } from "../../async_storage/storage";
 import { WebView } from "react-native-webview";
 import { WishlistScraperWebView } from "../../scrapers/wishlist_scraper";
+import {EventScraperWebView} from "../../scrapers/events_scraper";
 
 function HomeBar() {
   return (
@@ -22,9 +23,8 @@ function Content() {
   const { signOut } = useAuth();
   return (
     <View style={styles.content}>
-      <Events />
+      <Events/>
       <Button mode="contained" onPress={() => signOut()}>Sign out</Button>
-      
     </View>
   );
 }
@@ -49,7 +49,7 @@ export default function Home() {
     <View style={styles.container}>
       <HomeBar />
       <Content />
-      <WishlistScraperWebView />
+      <WishlistScraperWebView/>
     </View>
   );
 }
