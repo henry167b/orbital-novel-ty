@@ -49,13 +49,13 @@ export default function Home() {
     <View style={styles.container}>
       <HomeBar />
       <Content />
-      <WishlistScraperWebView/>
+      <EventScraperWebView />  
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container: {  
     flex : 1,
     backgroundColor: 'white'
   },
