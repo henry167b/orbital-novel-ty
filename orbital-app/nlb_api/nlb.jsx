@@ -94,7 +94,7 @@ export async function search(query) {
          <cat:Modifiers>
             <cat:SortSchema>TITLE</cat:SortSchema>
             <cat:StartRecordPosition>1</cat:StartRecordPosition>
-            <cat:MaximumRecords>10</cat:MaximumRecords>
+            <cat:MaximumRecords>20</cat:MaximumRecords>
             <cat:SetId></cat:SetId>
          </cat:Modifiers>
       </cat:SearchRequest>
