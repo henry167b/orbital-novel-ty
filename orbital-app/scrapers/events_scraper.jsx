@@ -16,7 +16,6 @@ export function EventScraperWebView() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
-    opacity: 0.99,
+    backgroundColor: "white"
   }
 });
