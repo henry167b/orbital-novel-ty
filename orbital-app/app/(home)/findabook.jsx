@@ -1,6 +1,6 @@
 import { useFocusEffect, useRouter } from "expo-router";
 import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "react-native-paper";
-import { View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { ToastAndroid, View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAvailability, search , getTitleDetails} from "../../nlb_api/nlb";
@@ -36,6 +36,7 @@ function Bookbox({ book }) {
   const handleAddtoWishList = () => {
     addBook(book);
     console.log("ISBN:", book.isbn); // to be removed afterwards
+    ToastAndroid.show("Book is added to Wishlist", ToastAndroid.SHORT);
   };
 
   return (
