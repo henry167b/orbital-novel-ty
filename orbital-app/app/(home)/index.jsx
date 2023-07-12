@@ -10,21 +10,19 @@ import { WishlistScraperWebView } from "../../scrapers/wishlist_scraper";
 import {EventScraperWebView} from "../../scrapers/events_scraper";
 
 function HomeBar() {
+  const { signOut } = useAuth();
   return (
     <Appbar.Header style={styles.bar} mode="center-aligned" statusBarHeight={60}>
       <Appbar.Content title="Novel-ty" />
-      <Appbar.Action icon="bell" />
-      <Appbar.Action icon="dots-vertical" />
+      <Button mode="contained" onPress={() => signOut()} style={styles.signOutButton}>Sign out</Button>
     </Appbar.Header>
   );
 }
 
 function Content() {
-  const { signOut } = useAuth();
   return (
     <View style={styles.content}>
-      <Events/>
-      <Button mode="contained" onPress={() => signOut()}>Sign out</Button>
+      <Events />
     </View>
   );
 }
@@ -32,7 +30,7 @@ function Content() {
 function Events() {
   return (
     <View style={styles.events}>
-      <Text variant="titleMedium">Upcoming Events</Text>
+      <Text variant="titleMedium" style={{ fontSize:20, textAlign: 'center' }}>Upcoming Events</Text>
     </View>
   );
 }
@@ -71,7 +69,7 @@ const styles = StyleSheet.create({
     gap: 20
   },
   events: {
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: "space-evenly",
     width: "100%",
     gap: 10
@@ -92,5 +90,8 @@ const styles = StyleSheet.create({
   },
   functionText: {
     textAlign: "center"
-  }
+  },
+  signOutButton:{
+    marginRight: 10,
+  },
 });
