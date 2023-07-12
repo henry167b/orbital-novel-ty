@@ -114,7 +114,6 @@ export async function search(query) {
       const doc = new DOMParser().parseFromString(res.data, 'text/xml');
       const items = doc.getElementsByTagName('Title');
       let books = [];
-      const totalrecords = doc.getElementsByTagName('TotalRecords')[0].textContent;
   
       for (let i = 0; i < items.length; i++) {
         const book = {
