@@ -1,6 +1,6 @@
 import { useFocusEffect, useRouter } from "expo-router";
 import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "react-native-paper";
-import { ToastAndroid, View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { Modal, View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAvailability, search , getTitleDetails} from "../../nlb_api/nlb";
@@ -33,10 +33,12 @@ function Search({ searchNLB }) {
 }
 
 function Bookbox({ book }) {
+  const [modalVisible, setModalVisible] = useState(false); 
+
   const handleAddtoWishList = () => {
     addBook(book);
     console.log("ISBN:", book.isbn); // to be removed afterwards
-    ToastAndroid.show("Book is added to Wishlist", ToastAndroid.SHORT);
+    setModalVisible(true);
   };
 
   return (
@@ -47,6 +49,25 @@ function Bookbox({ book }) {
       {true && (
         <LogButton onPress={handleAddtoWishList} text="Add to Wish List" />
       )}
+      {/* Modal */}
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Book is added to Wishlist</Text>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.modalButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -114,6 +135,7 @@ export default function FindABook() {
   const [data, setData] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const searchNLB = (query) => {
     if ((query.length == 10 || query.length == 13) && /^\d+$/.test(query)) {
@@ -137,7 +159,7 @@ export default function FindABook() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Search searchNLB={searchNLB} setSearchQuery={setSearchQuery}/>
+      <Search searchNLB={searchNLB} setSearchQuery={setSearchQuery} />
       <Divider style={{ width: '100%' }} />
       {showSearch && <Searchresults data={data} />}
       {!showSearch && (
@@ -242,5 +264,33 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.5)"
+    },
+    modalContent: {
+      backgroundColor: "white",
+      padding: 20,
+      borderRadius: 10,
+      alignItems: "center"
+    },
+    modalText: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 20
+    },
+    modalButton: {
+      backgroundColor: "#0D98C0",
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      borderRadius: 5
+    },
+    modalButtonText: {
+      color: "white",
+      fontSize: 16,
+      fontWeight: "bold"
     }
 });
