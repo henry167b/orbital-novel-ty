@@ -4,6 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Surface, Text, TextInput, Checkbox, Button, ActivityIndicator } from 'react-native-paper';
 import { useAuth } from "../../contexts/auth";
 import { WebView } from 'react-native-webview';
+import { clearRecentSearches } from '../../async_storage/storage';
 
 function RememberMe() {
   const [checked, setChecked] = useState(false);
@@ -99,7 +100,8 @@ export default function Login() {
           contentStyle={{}}
           style={{borderRadius: 5, width: '100%'}}
           labelStyle={{}}
-          onPress={() => {
+          onPress={async() => {
+            await clearRecentSearches();
             if (user == 'novelty' && password == 'password') {
               bypass();
             } else {

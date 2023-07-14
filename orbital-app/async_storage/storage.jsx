@@ -162,8 +162,6 @@ export const storeDefaults = () => {
   }
 };
 
-//new shit below
-
 export const addRecentSearch = async (searchQuery) => {
   try {
     const jsonValue = await AsyncStorage.getItem('@recentSearches');
@@ -185,6 +183,7 @@ export const addRecentSearch = async (searchQuery) => {
   }
 };
 
+
 export const getRecentSearches = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('@recentSearches');
@@ -195,4 +194,9 @@ export const getRecentSearches = async () => {
   } catch (e) {
     console.log(e);
   }
+};
+
+export const clearRecentSearches = async () => {
+  AsyncStorage.clear();
+  console.log("kek");
 };
