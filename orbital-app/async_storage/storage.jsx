@@ -198,5 +198,4 @@ export const getRecentSearches = async () => {
 
 export const clearRecentSearches = async () => {
   AsyncStorage.clear();
-  console.log("kek");
 };

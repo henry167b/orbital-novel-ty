@@ -8,6 +8,7 @@ import { storeDefaults, getBooks, removeBook } from "../../async_storage/storage
 import { RemoveFromWishlist } from "../../scrapers/wishlist_scraper";
 import { WebView } from "react-native-webview";
 import { LoanlistScraperWebView } from "../../scrapers/loanlist_scraper";
+import moment from "moment";
 
 function HomeBar() {
   return (
@@ -66,13 +67,17 @@ function WishList({ setBrn }) {
   );
 }
 
-function LoanBook({book}) {
+function LoanBook({ book }) {
+  const isDueWithin7Days = moment(book.duedate, 'DD MMMM YYYY').diff(moment(), 'days') <= 7; //change to 14 when testing for this
+
   return (
     <View style={styles.book}>
       <View>
         <Text>Title: {book.title}</Text>
         <Text></Text>
-        <Text>Due date: {book.duedate}</Text>
+        <Text style={isDueWithin7Days ? styles.dueDateRed : styles.dueDate}>
+          Due date: {book.duedate}
+        </Text>
       </View>
     </View>
   );
@@ -156,13 +161,20 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 0,
     marginTop: 10,
-    margin:10,
-    borderRadius:5,
-    shadowColor: "black",
+    margin: 10,
+    borderRadius: 5,
+    shadowColor: 'black',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-    elevation: 4, // for Android 
+    elevation: 4,
+  },
+  dueDate: {
+    fontSize: 14,
+  },
+  dueDateRed: {
+    fontSize: 14,
+    color: 'red',
   },
   removeButton: {
     width:100,
