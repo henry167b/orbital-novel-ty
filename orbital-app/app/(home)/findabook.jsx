@@ -9,6 +9,7 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { Animated } from "react-native";
 import { addRecentSearch } from "../../async_storage/storage";
 import { getRecentSearches } from "../../async_storage/storage";
+import { AddToWishlist } from "../../scrapers/wishlist_scraper";
 
 
 function Search({ searchNLB }) {
@@ -32,10 +33,11 @@ function Search({ searchNLB }) {
   );
 }
 
-function Bookbox({ book }) {
+function Bookbox({ book, brnToAdd, setBrnToAdd }) {
   const [modalVisible, setModalVisible] = useState(false); 
 
   const handleAddtoWishList = () => {
+    setBrnToAdd(book.bid);
     addBook(book);
     console.log("ISBN:", book.isbn); // to be removed afterwards
     setModalVisible(true);
@@ -72,7 +74,7 @@ function Bookbox({ book }) {
   );
 }
 
-function Searchresults({ data }) {
+function Searchresults({ data, brnToAdd, setBrnToAdd }) {
   return (
     <View style={styles.searchResults}>
       <Text>RESULTS</Text>
@@ -80,7 +82,7 @@ function Searchresults({ data }) {
         showsVerticalScrollIndicator={false}
         style={{ width: '100%', marginVertical: 20 }}
         data={data}
-        renderItem={({ item }) => <Bookbox book={item} />}
+        renderItem={({ item }) => <Bookbox book={item} brnToAdd={brnToAdd} setBrnToAdd={setBrnToAdd} />}
       />
     </View>
   );
@@ -135,6 +137,7 @@ export default function FindABook() {
   const [data, setData] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [brnToAdd, setBrnToAdd] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
   const searchNLB = (query) => {
@@ -161,11 +164,13 @@ export default function FindABook() {
     <SafeAreaView style={styles.container}>
       <Search searchNLB={searchNLB} setSearchQuery={setSearchQuery} />
       <Divider style={{ width: '100%' }} />
-      {showSearch && <Searchresults data={data} />}
+      {brnToAdd && <AddToWishlist brnToAdd={brnToAdd} setBrnToAdd={setBrnToAdd} />}
+      {showSearch && <Searchresults data={data} brnToAdd={brnToAdd} setBrnToAdd={setBrnToAdd} />}
       {!showSearch && (
         <RecentSearches searchNLB={searchNLB} setSearchQuery={setSearchQuery} />
       )}
       {!showSearch && <Recommended />}
+      
     </SafeAreaView>
   );
 }

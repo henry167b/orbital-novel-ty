@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { getTitleDetails } from "../nlb_api/nlb";
 import { WebView } from "react-native-webview";
 import { useAuth } from "../contexts/auth"
@@ -71,7 +71,45 @@ export function WishlistScraperWebView() {
   );
 }
 
-export function AddToWishlist() {
+export function AddToWishlist({ brnToAdd, setBrnToAdd }) {
+  const { user, password } = useAuth();
+
+  const injectAddScript = `
+    setTimeout(() => {
+      const add = document.getElementsByTagName('nlb-bookmark')[0];
+      add.click();
+      window.ReactNativeWebView.postMessage(JSON.stringify(true));
+    }, 5000);
+    
+    true;
+  `;
+
+  const handleWebViewLoad = () => {
+    // if (!injectRemove) {
+    //   this.webref.injectJavaScript(injectLoginScript);
+    //   setInjectRemove(true);
+    // } else {
+      setTimeout(() => {
+        this.webref.injectJavaScript(injectAddScript);
+      }, 2000);
+    // }
+  };
+
+
+  return (
+    // delete style to hide
+    <View style={{ width: '100%', height: 1}}>
+      <WebView
+      ref={(r) => (this.webref = r)}
+      source={{ uri: "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/ENQ/WPAC/BIBENQ?SETLVL=1&BRN=" + brnToAdd }}
+      onLoadEnd={handleWebViewLoad}
+      onMessage={(msg) => {
+        console.log(JSON.parse(msg.nativeEvent.data));
+        setBrnToAdd('');
+      }}
+      />
+    </View>
+  );
 
 }
 
@@ -132,7 +170,7 @@ export function RemoveFromWishlist({ BRN, setBrn }) {
 
   return (
     // delete style to hide
-    <View style={{ height: 0 }}>
+    <View style={{ height: 1 }}>
       { BRN && <WebView
         ref={(r) => (this.webref = r)}
         style={{ flex: 1 }} //change to 0 to hide
