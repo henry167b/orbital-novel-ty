@@ -1,9 +1,9 @@
 import { useFocusEffect, useRouter } from "expo-router";
-import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider } from "react-native-paper";
-import { Modal, View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider, Portal, Modal as PaperModal } from "react-native-paper";
+import { Modal, View, StyleSheet, FlatList, TouchableOpacity, ScrollView } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getAvailability, search , getTitleDetails} from "../../nlb_api/nlb";
+import { getAvailability, search , getTitleDetails, getSummary} from "../../nlb_api/nlb";
 import { addBook } from "../../async_storage/storage";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { Animated } from "react-native";
@@ -34,7 +34,10 @@ function Search({ searchNLB }) {
 }
 
 function Bookbox({ book, brnToAdd, setBrnToAdd }) {
-  const [modalVisible, setModalVisible] = useState(false); 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [detailsVisible, setDetailsVisisble] = useState(false);
+  const [summary, setSummary] = useState('');
+  const [notes, setNotes] = useState('');
 
   const handleAddtoWishList = () => {
     setBrnToAdd(book.bid);
@@ -43,14 +46,23 @@ function Bookbox({ book, brnToAdd, setBrnToAdd }) {
     setModalVisible(true);
   };
 
+  const handleGetDetails = () => {
+    if (summary == '') {
+      getSummary(book.isbn).then(res => {
+        setSummary(res[0]);
+        setNotes(res[1]);
+      });
+    }
+    setDetailsVisisble(true);
+  }
+
   return (
-    <View style={styles.book}>
+    <TouchableOpacity style={styles.book} onPress={handleGetDetails}>
       <Text>Title: {book.title}</Text>
       <Text>Author: {book.author}</Text>
       <Text>ISBN: {book.isbn}</Text>
-      {true && (
-        <LogButton onPress={handleAddtoWishList} text="Add to Wish List" />
-      )}
+      <LogButton onPress={handleAddtoWishList} text="Add to Wish List" />
+
       {/* Modal */}
       <Modal
         visible={modalVisible}
@@ -70,7 +82,24 @@ function Bookbox({ book, brnToAdd, setBrnToAdd }) {
           </View>
         </View>
       </Modal>
-    </View>
+
+      <Portal>
+        <PaperModal
+          visible={detailsVisible}
+          onDismiss={() => setDetailsVisisble(false)}
+          contentContainerStyle={styles.summaryContainer}
+          style={styles.summary}
+        >
+          <ScrollView style={styles.summaryScroll}>
+            <Text style={{textAlign: 'center'}}>Summary:</Text>
+            <Text></Text>
+            <Text>{summary}</Text>
+            <Text></Text>
+          </ScrollView>
+        </PaperModal>
+      </Portal>
+
+    </TouchableOpacity>
   );
 }
 
@@ -297,5 +326,17 @@ const styles = StyleSheet.create({
       color: "white",
       fontSize: 16,
       fontWeight: "bold"
+    },
+    summaryContainer: {
+      borderRadius: 10,
+      alignItems: 'center',
+      backgroundColor: 'white',
+      padding: 15     
+    },
+    summary: {
+      marginHorizontal: '10%',
+    },
+    summaryScroll: {
+      height: '50%'
     }
 });

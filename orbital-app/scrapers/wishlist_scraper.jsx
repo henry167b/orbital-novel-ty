@@ -57,10 +57,10 @@ export function WishlistScraperWebView() {
 
   return (
     // delete style to hide
-    <View style={{ height: 1 }}>
+    <View style={{ height: 3 }}>
       <WebView
         ref={(r) => (this.webref = r)}
-        style={{ flex: 0 }} //change to 0 to hide
+        style={{ flex: 1 }} //change to 0 to hide
         source={{ uri: "https://www.nlb.gov.sg/mylibrary/Bookmarks" }}
         onLoadEnd={handleWebViewLoad}
         onMessage={(msg) => {
