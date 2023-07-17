@@ -6,21 +6,6 @@ import { useAuth } from "../../contexts/auth";
 import { WebView } from 'react-native-webview';
 import { clearRecentSearches } from '../../async_storage/storage';
 
-function RememberMe() {
-  const [checked, setChecked] = useState(false);
-
-  return (
-    <View style={{flexDirection: 'row', alignItems: 'baseline', justifyContent: 'center', gap: 10, width: '100%'}}>
-      {<Checkbox
-        status={checked ? 'checked' : 'unchecked'}
-        onPress={() => {setChecked(!checked)}}
-      />}
-      <Text variant='bodyLarge'>Remember me</Text>
-    </View>
-    
-  );
-}
-
 export default function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
@@ -99,7 +84,7 @@ export default function Login() {
           mode='contained' 
           contentStyle={{}}
           style={{borderRadius: 5, width: '100%'}}
-          labelStyle={{}}
+          testID='button'
           onPress={async() => {
             await clearRecentSearches();
             if (user == 'novelty' && password == 'password') {

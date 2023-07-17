@@ -1,7 +1,6 @@
 import { useRouter, useFocusEffect } from "expo-router";
 import { Button, Appbar, Card, Text, SegmentedButtons } from "react-native-paper";
 import { View, StyleSheet, FlatList } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState, useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { storeDefaults, getBooks, removeBook } from "../../async_storage/storage";
