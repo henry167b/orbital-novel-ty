@@ -1,8 +1,6 @@
 import * as api from "../nlb_api/nlb";
 import axios from "axios";
 
-jest.mock("axios");
-
 describe("SOAP API Tests", () => {
   //  Test for availability
   it("should fetch availibility successfully", async () => {

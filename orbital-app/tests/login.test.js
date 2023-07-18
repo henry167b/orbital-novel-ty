@@ -27,7 +27,6 @@ describe("<Login />", () => {
 
   it("has 1 child", () => {
     const tree = renderer.create(<Login />).toJSON();
-    console.log(tree[1]);
     expect(tree[0].children.length).toBe(2);
   })
 });
