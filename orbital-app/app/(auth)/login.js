@@ -64,6 +64,7 @@ export default function Login() {
               value={user}
               onChangeText={setUser}
               style={styles.textInput}
+              testID='username-input'
             />
           </View>
 
@@ -74,10 +75,11 @@ export default function Login() {
               value={password}
               onChangeText={setPassword}
               style={styles.textInput}
+              testID='password-input'
             />
           </View>
         </View>
-        { errMsg !== "" && <Text>{errMsg}</Text>}
+        { errMsg !== "" && <Text testID='error-message'>{errMsg}</Text>}
         { loading && <ActivityIndicator /> }
 
         <Button 

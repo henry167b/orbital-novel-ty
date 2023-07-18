@@ -31,9 +31,10 @@ export async function getAvailability(ISBN) {
    const doc = new DOMParser().parseFromString(res.data, 'text/xml');
    const items = doc.getElementsByTagName("Item");
    let locations = [];
+
    for (let i = 0; i <items.length; i++) {
-      if (items[i].childNodes[7].textContent == 'Not on Loan') {
-         locations[locations.length] = (items[i].childNodes[2].textContent);
+      if (items[i].getElementsByTagName('StatusDesc')[0].textContent == 'Not on Loan') {
+         locations.push(items[i].getElementsByTagName('BranchName')[0].textContent);
       }
    }
    return locations;

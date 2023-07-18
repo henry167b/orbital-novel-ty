@@ -171,7 +171,7 @@ exports[`<Login /> can render 1`] = `
                   undefined,
                 ]
               }
-              testID="text-input-flat"
+              testID="username-input"
               underlineColorAndroid="transparent"
               value=""
             />
@@ -302,7 +302,7 @@ exports[`<Login /> can render 1`] = `
                   undefined,
                 ]
               }
-              testID="text-input-flat"
+              testID="password-input"
               underlineColorAndroid="transparent"
               value=""
             />
