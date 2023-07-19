@@ -1,0 +1,448 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Home /> can render 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": "white",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "white",
+          "elevation": 0,
+          "paddingHorizontal": 0,
+          "paddingTop": 60,
+          "zIndex": 0,
+        },
+        {},
+        {},
+      ]
+    }
+    testID="appbar-header-root-layer"
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "white",
+          "height": 64,
+          "shadowColor": "#000",
+          "shadowOffset": {
+            "height": 0,
+            "width": 0,
+          },
+          "shadowOpacity": 0,
+          "shadowRadius": 0,
+          "width": "100%",
+        }
+      }
+      testID="appbar-header-outer-layer"
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "white",
+            "flex": 1,
+            "flexDirection": "row",
+            "paddingBottom": undefined,
+            "paddingHorizontal": 4,
+            "paddingLeft": undefined,
+            "paddingRight": undefined,
+            "paddingTop": undefined,
+            "shadowColor": "#000",
+            "shadowOffset": {
+              "height": 0,
+              "width": 0,
+            },
+            "shadowOpacity": 0,
+            "shadowRadius": 0,
+          }
+        }
+        testID="appbar-header"
+      >
+        <View
+          style={
+            {
+              "width": 52,
+            }
+          }
+        />
+        <View
+          pointerEvents="box-none"
+          style={
+            [
+              {
+                "flex": 1,
+                "paddingHorizontal": 12,
+              },
+              {
+                "paddingHorizontal": 0,
+              },
+              [
+                false,
+                {
+                  "alignItems": "center",
+                },
+                undefined,
+              ],
+            ]
+          }
+          testID="appbar-content"
+        >
+          <Text
+            accessibilityRole="header"
+            accessibilityTraits="header"
+            accessible={true}
+            numberOfLines={1}
+            style={
+              [
+                {
+                  "fontFamily": "System",
+                  "fontSize": 22,
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                  "lineHeight": 28,
+                },
+                {
+                  "textAlign": "left",
+                },
+                {
+                  "color": "rgba(28, 27, 31, 1)",
+                  "writingDirection": "ltr",
+                },
+                [
+                  {
+                    "color": "rgba(28, 27, 31, 1)",
+                    "fontFamily": "System",
+                    "fontSize": 22,
+                    "fontWeight": "400",
+                    "letterSpacing": 0,
+                    "lineHeight": 28,
+                  },
+                  false,
+                  undefined,
+                ],
+              ]
+            }
+            testID="appbar-content-title-text"
+          >
+            Novel-ty
+          </Text>
+        </View>
+        <View
+          collapsable={false}
+          style={
+            {
+              "backgroundColor": "rgba(103, 80, 164, 1)",
+              "borderRadius": 20,
+              "marginRight": 10,
+              "shadowColor": "#000",
+              "shadowOffset": {
+                "height": 0,
+                "width": 0,
+              },
+              "shadowOpacity": 0,
+              "shadowRadius": 0,
+            }
+          }
+          testID="button-container-outer-layer"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "backgroundColor": "rgba(103, 80, 164, 1)",
+                "borderColor": "transparent",
+                "borderRadius": 20,
+                "borderStyle": "solid",
+                "borderWidth": 0,
+                "flex": undefined,
+                "minWidth": 64,
+                "shadowColor": "#000",
+                "shadowOffset": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0,
+                "shadowRadius": 0,
+              }
+            }
+            testID="button-container"
+          >
+            <View
+              accessibilityRole="button"
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                [
+                  {
+                    "overflow": "hidden",
+                  },
+                  {
+                    "borderRadius": 20,
+                  },
+                ]
+              }
+              testID="button"
+            >
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  numberOfLines={1}
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 14,
+                        "fontWeight": "500",
+                        "letterSpacing": 0.1,
+                        "lineHeight": 20,
+                      },
+                      {
+                        "textAlign": "left",
+                      },
+                      {
+                        "color": "rgba(28, 27, 31, 1)",
+                        "writingDirection": "ltr",
+                      },
+                      [
+                        {
+                          "marginHorizontal": 16,
+                          "marginVertical": 9,
+                          "textAlign": "center",
+                        },
+                        false,
+                        {
+                          "marginHorizontal": 24,
+                          "marginVertical": 10,
+                        },
+                        undefined,
+                        false,
+                        {
+                          "color": "rgba(255, 255, 255, 1)",
+                          "fontFamily": "System",
+                          "fontSize": 14,
+                          "fontWeight": "500",
+                          "letterSpacing": 0.1,
+                          "lineHeight": 20,
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                  testID="button-text"
+                >
+                  Sign out
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "paddingHorizontal": 35,
+        "paddingVertical": 15,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "gap": 10,
+          "justifyContent": "space-evenly",
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "letterSpacing": 0.15,
+              "lineHeight": 24,
+            },
+            {
+              "textAlign": "left",
+            },
+            {
+              "color": "rgba(28, 27, 31, 1)",
+              "writingDirection": "ltr",
+            },
+            {
+              "fontSize": 20,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Upcoming Events
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "white",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "flex": 1,
+            "overflow": "hidden",
+          },
+          undefined,
+        ]
+      }
+    >
+      <RNCWebView
+        cacheEnabled={true}
+        injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
+        injectedJavaScriptForMainFrameOnly={true}
+        javaScriptEnabled={true}
+        messagingEnabled={true}
+        onContentProcessDidTerminate={[Function]}
+        onHttpError={[Function]}
+        onLoadingError={[Function]}
+        onLoadingFinish={[Function]}
+        onLoadingProgress={[Function]}
+        onLoadingStart={[Function]}
+        onMessage={[Function]}
+        onShouldStartLoadWithRequest={[Function]}
+        source={
+          {
+            "uri": "https://www.nlb.gov.sg/main/whats-on/events#filterResult2",
+          }
+        }
+        style={
+          [
+            {
+              "flex": 1,
+              "overflow": "hidden",
+            },
+            {
+              "backgroundColor": "#ffffff",
+            },
+            undefined,
+          ]
+        }
+        textInteractionEnabled={true}
+        useSharedProcessPool={true}
+      />
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "height": 3,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "flex": 1,
+            "overflow": "hidden",
+          },
+          undefined,
+        ]
+      }
+    >
+      <RNCWebView
+        cacheEnabled={true}
+        injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
+        injectedJavaScriptForMainFrameOnly={true}
+        javaScriptEnabled={true}
+        messagingEnabled={true}
+        onContentProcessDidTerminate={[Function]}
+        onHttpError={[Function]}
+        onLoadingError={[Function]}
+        onLoadingFinish={[Function]}
+        onLoadingProgress={[Function]}
+        onLoadingStart={[Function]}
+        onMessage={[Function]}
+        onShouldStartLoadWithRequest={[Function]}
+        source={
+          {
+            "uri": "https://www.nlb.gov.sg/mylibrary/Bookmarks",
+          }
+        }
+        style={
+          [
+            {
+              "flex": 1,
+              "overflow": "hidden",
+            },
+            {
+              "backgroundColor": "#ffffff",
+            },
+            {
+              "flex": 1,
+            },
+          ]
+        }
+        textInteractionEnabled={true}
+        useSharedProcessPool={true}
+      />
+    </View>
+  </View>
+</View>
+`;
