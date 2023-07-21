@@ -462,7 +462,6 @@ exports[`<BookLists /> can render 1`] = `
 exports[`<LoanList /> renders correctly 1`] = `
 <View>
   <RCTScrollView
-    data={null}
     getItem={[Function]}
     getItemCount={[Function]}
     keyExtractor={[Function]}

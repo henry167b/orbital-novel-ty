@@ -94,25 +94,24 @@ function LoanBook({ book }) {
   );
 }
 
-export function LoanList() {
-  const [data, setData] = useState(null);
+export function LoanList({loanlistData, setLoanlistData}) {
   const [showWebView, setShowWebView] = useState(true);
 
   useEffect(() => {
-    setShowWebView(!data);
-  }, [data, showWebView]);
+    setShowWebView(!loanlistData);
+  }, [loanlistData, showWebView]);
 
   return (
     <View>
       {showWebView && (
         <LoanlistScraperWebView
-          setData={setData}
+          setData={setLoanlistData}
           setShowWebView={setShowWebView}
         />
       )}
       <FlatList
         style={{ width: "100%", marginBottom: 175 }}
-        data={data}
+        data={loanlistData}
         renderItem={({ item }) => <LoanBook book={item} />}
       />
     </View>
@@ -122,6 +121,7 @@ export function LoanList() {
 export default function BookLists() {
   const [value, setValue] = useState("");
   const [brn, setBrn] = useState("");
+  const [loanlistData, setLoanlistData] = useState(null);
 
   useEffect(() => {}, [brn]);
 
@@ -148,7 +148,7 @@ export default function BookLists() {
         />
         {brn && <RemoveFromWishlist BRN={brn} setBrn={setBrn} />}
         {value == "wishlist" && <WishList setBrn={setBrn} />}
-        {value == "loanlist" && <LoanList />}
+        {value == "loanlist" && <LoanList loanlistData={loanlistData} setLoanlistData={setLoanlistData} />}
       </View>
     </SafeAreaProvider>
   );
