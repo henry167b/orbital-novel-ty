@@ -94,7 +94,7 @@ function LoanBook({ book }) {
   );
 }
 
-function LoanList() {
+export function LoanList() {
   const [data, setData] = useState(null);
   const [showWebView, setShowWebView] = useState(true);
 

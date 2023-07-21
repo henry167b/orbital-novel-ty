@@ -7,9 +7,7 @@ jest.mock("expo-router", () => ({
   useRouter: () => ({
     replace: jest.fn(),
   }),
-  useFocusEffect: () => ({
-    replace: jest.fn()
-  }),
+  useFocusEffect: jest.fn()
 }));
 
 describe("<Home />", () => {

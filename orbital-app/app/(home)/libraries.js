@@ -36,12 +36,6 @@ export default function Libraries() {
   const [selectedLibrary, setSelectedLibrary] = useState(null); // To keep track of the selected library
   const [refresh, setRefresh] = useState(false);
 
-  useFocusEffect(
-    useCallback(() => {
-      getInfo();
-    }, [])
-  );
-
   const getInfo = () => {
     getLibraries().then((libraries) => {
       libraries.sort((a, b) =>
@@ -55,6 +49,14 @@ export default function Libraries() {
     });
     getBooks().then((books) => setBooks(books));
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      getInfo();
+    }, [])
+  );
+
+
 
   const handleLibraryPress = (library) => {
     console.log("Library pressed:", library);

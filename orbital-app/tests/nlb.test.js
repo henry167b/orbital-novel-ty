@@ -80,7 +80,7 @@ describe("SOAP API Tests", () => {
     axios.post.mockResolvedValue({ data: mockResponse });
 
     const query = "9619492";
-    const books = await api.getTitleDetails(query);
+    const books = await api.getTitleDetails(query, '');
 
     expect(books).toHaveLength(1);
     expect(books[0].title).toBe("A clockwork orange / Anthony Burgess.");
@@ -127,7 +127,7 @@ describe("SOAP API Tests", () => {
     // Mocking the axios.post method to return a resolved Promise with the mockResponse
     axios.post.mockResolvedValue({ data: mockResponse });
 
-    const query = "Book Title";
+    const query = "Lee Kuan Yew blazing";
     const books = await api.search(query);
 
     expect(books).toHaveLength(2);
