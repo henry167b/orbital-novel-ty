@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { getTitleDetails } from "../nlb_api/nlb";
 import { WebView } from "react-native-webview";
 import { useAuth } from "../contexts/auth"
-import { addBook, addManyBooks } from "../async_storage/storage";
+import { addManyBooks } from "../async_storage/storage";
 
 async function handleParsedBooks(data) {
   const BRNs = data.filter(Number);

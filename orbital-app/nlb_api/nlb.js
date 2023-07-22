@@ -1,10 +1,11 @@
 import axios from "axios";
 import { DOMParser } from "xmldom";
+import { NLB_API_KEY } from "@env";
+const API_KEY = `${ NLB_API_KEY }`;
 
 // usage of module
 export async function getAvailability(ISBN) {
    const url = 'https://openweb.nlb.gov.sg/OWS/CatalogueService.svc?singleWsdl';
-   const API_KEY = 'RGV2LUlibnU6UEBzc3cwcmQyMDIz';
    const xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cat="http://www.nlb.gov.sg/ws/CatalogueService">
       <soapenv:Header/>
       <soapenv:Body>
@@ -42,7 +43,6 @@ export async function getAvailability(ISBN) {
 
 export async function getTitleDetails(BID, ISBN) {
    const url = 'https://openweb.nlb.gov.sg/OWS/CatalogueService.svc?singleWsdl';
-   const API_KEY = 'RGV2LUlibnU6UEBzc3cwcmQyMDIz';
    const xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cat="http://www.nlb.gov.sg/ws/CatalogueService">
    <soapenv:Header/>
       <soapenv:Body>
@@ -80,7 +80,6 @@ export async function getTitleDetails(BID, ISBN) {
 
 export async function search(query) {
    const url = 'https://openweb.nlb.gov.sg/OWS/CatalogueService.svc?singleWsdl';
-   const API_KEY = 'RGV2LUlibnU6UEBzc3cwcmQyMDIz';
    const xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cat="http://www.nlb.gov.sg/ws/CatalogueService">
    <soapenv:Header/>
    <soapenv:Body>
@@ -137,7 +136,6 @@ export async function search(query) {
 
 export async function getSummary(ISBN) {
    const url = 'https://openweb.nlb.gov.sg/OWS/CatalogueService.svc?singleWsdl';
-   const API_KEY = 'RGV2LUlibnU6UEBzc3cwcmQyMDIz';
    const xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cat="http://www.nlb.gov.sg/ws/CatalogueService">
    <soapenv:Header/>
       <soapenv:Body>
