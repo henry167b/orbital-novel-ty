@@ -1,9 +1,31 @@
 import { useFocusEffect, useRouter } from "expo-router";
-import { Button, Appbar, Surface, Text, TextInput, Searchbar, Divider, Portal, Modal as PaperModal } from "react-native-paper";
-import { Modal, View, StyleSheet, FlatList, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Button,
+  Appbar,
+  Surface,
+  Text,
+  TextInput,
+  Searchbar,
+  Divider,
+  Portal,
+  Modal as PaperModal,
+} from "react-native-paper";
+import {
+  Modal,
+  View,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { getAvailability, search , getTitleDetails, getSummary} from "../../nlb_api/nlb";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import {
+  getAvailability,
+  search,
+  getTitleDetails,
+  getSummary,
+} from "../../nlb_api/nlb";
 import { addBook } from "../../async_storage/storage";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { Animated } from "react-native";
@@ -11,9 +33,8 @@ import { addRecentSearch } from "../../async_storage/storage";
 import { getRecentSearches } from "../../async_storage/storage";
 import { AddToWishlist } from "../../scrapers/wishlist_scraper";
 
-
 function Search({ searchNLB }) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = () => {
     searchNLB(searchQuery);
@@ -36,8 +57,8 @@ function Search({ searchNLB }) {
 function Bookbox({ book, brnToAdd, setBrnToAdd }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [detailsVisible, setDetailsVisisble] = useState(false);
-  const [summary, setSummary] = useState('');
-  const [notes, setNotes] = useState('');
+  const [summary, setSummary] = useState("");
+  const [notes, setNotes] = useState("");
 
   const handleAddtoWishList = () => {
     setBrnToAdd(book.bid);
@@ -47,14 +68,14 @@ function Bookbox({ book, brnToAdd, setBrnToAdd }) {
   };
 
   const handleGetDetails = () => {
-    if (summary == '') {
-      getSummary(book.isbn).then(res => {
+    if (summary == "") {
+      getSummary(book.isbn).then((res) => {
         setSummary(res[0]);
         setNotes(res[1]);
       });
     }
     setDetailsVisisble(true);
-  }
+  };
 
   return (
     <TouchableOpacity style={styles.book} onPress={handleGetDetails}>
@@ -91,14 +112,13 @@ function Bookbox({ book, brnToAdd, setBrnToAdd }) {
           style={styles.summary}
         >
           <ScrollView style={styles.summaryScroll}>
-            <Text style={{textAlign: 'center'}}>Summary:</Text>
+            <Text style={{ textAlign: "center" }}>Summary:</Text>
             <Text></Text>
             <Text>{summary}</Text>
             <Text></Text>
           </ScrollView>
         </PaperModal>
       </Portal>
-
     </TouchableOpacity>
   );
 }
@@ -109,9 +129,11 @@ function Searchresults({ data, brnToAdd, setBrnToAdd }) {
       <Text>RESULTS</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
-        style={{ width: '100%', marginVertical: 20 }}
+        style={{ width: "100%", marginVertical: 20 }}
         data={data}
-        renderItem={({ item }) => <Bookbox book={item} brnToAdd={brnToAdd} setBrnToAdd={setBrnToAdd} />}
+        renderItem={({ item }) => (
+          <Bookbox book={item} brnToAdd={brnToAdd} setBrnToAdd={setBrnToAdd} />
+        )}
       />
     </View>
   );
@@ -142,9 +164,9 @@ function RecentSearches({ searchNLB, setSearchQuery }) {
         data={recentSearches}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity 
-          onPress={() => handleRecentSearch(item)}
-          style={styles.recentSearchButtonContainer}
+          <TouchableOpacity
+            onPress={() => handleRecentSearch(item)}
+            style={styles.recentSearchButtonContainer}
           >
             <Text style={styles.recentSearchButton}>{item}</Text>
           </TouchableOpacity>
@@ -154,29 +176,21 @@ function RecentSearches({ searchNLB, setSearchQuery }) {
   );
 }
 
-function Recommended() {
-  return (
-    <View style={styles.recommended}>
-      <Text>RECOMMENDED FOR YOU</Text>
-    </View>
-  );
-}
-
 export default function FindABook() {
   const [data, setData] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [brnToAdd, setBrnToAdd] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [brnToAdd, setBrnToAdd] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
   const searchNLB = (query) => {
     if ((query.length == 10 || query.length == 13) && /^\d+$/.test(query)) {
-      getTitleDetails('', query).then(res => {
+      getTitleDetails("", query).then((res) => {
         setData(res);
         setShowSearch(true);
-      })
+      });
     } else {
-      search(query).then(res => {
+      search(query).then((res) => {
         setData(res);
         setShowSearch(true);
       });
@@ -190,17 +204,28 @@ export default function FindABook() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Search searchNLB={searchNLB} setSearchQuery={setSearchQuery} />
-      <Divider style={{ width: '100%' }} />
-      {brnToAdd && <AddToWishlist brnToAdd={brnToAdd} setBrnToAdd={setBrnToAdd} />}
-      {showSearch && <Searchresults data={data} brnToAdd={brnToAdd} setBrnToAdd={setBrnToAdd} />}
-      {!showSearch && (
-        <RecentSearches searchNLB={searchNLB} setSearchQuery={setSearchQuery} />
-      )}
-      {!showSearch && <Recommended />}
-      
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <Search searchNLB={searchNLB} setSearchQuery={setSearchQuery} />
+        <Divider style={{ width: "100%" }} />
+        {brnToAdd && (
+          <AddToWishlist brnToAdd={brnToAdd} setBrnToAdd={setBrnToAdd} />
+        )}
+        {showSearch && (
+          <Searchresults
+            data={data}
+            brnToAdd={brnToAdd}
+            setBrnToAdd={setBrnToAdd}
+          />
+        )}
+        {!showSearch && (
+          <RecentSearches
+            searchNLB={searchNLB}
+            setSearchQuery={setSearchQuery}
+          />
+        )}
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
@@ -215,66 +240,66 @@ function LogButton({ onPress, text }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "flex-start",
   },
   searchbar: {
     backgroundColor: "#F3F6F8",
-    width: '80%',
+    width: "80%",
     borderRadius: 10,
     marginHorizontal: 35,
     marginVertical: 25,
-    height: 50
+    height: 50,
   },
   recentSearches: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    width: '100%',
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "100%",
     paddingHorizontal: 35,
     paddingBottom: 20,
-    paddingTop: 20
+    paddingTop: 20,
   },
   recentSearchButton: {
-    fontSize:15,
-    fontWeight: 'bold'
+    fontSize: 15,
+    fontWeight: "bold",
   },
   recentSearchButtonContainer: {
-    backgroundColor: '#F3F6F8',
+    backgroundColor: "#F3F6F8",
     borderRadius: 5,
     padding: 10,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity:0.25,
+    shadowOpacity: 0.25,
     shadowRadius: 5,
     elevation: 5,
-    marginBottom:10,
-    margin:5
+    marginBottom: 10,
+    margin: 5,
   },
   recommended: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    width: '100%',
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "100%",
     paddingHorizontal: 35,
-    paddingTop: 20
+    paddingTop: 20,
   },
   searchResults: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    width: '100%',
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "100%",
     paddingHorizontal: 35,
-    paddingTop: 20
+    paddingTop: 20,
   },
   book: {
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    backgroundColor: 'white',
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    backgroundColor: "white",
     padding: 10,
     borderWidth: 0,
     borderRadius: 5,
@@ -284,7 +309,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-    elevation: 4, // for Android 
+    elevation: 4, // for Android
   },
   button: {
     backgroundColor: "#0D98C0",
@@ -292,51 +317,51 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 500,
     marginTop: 10,
-    },
+  },
   buttonText: {
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
-    },
-    modalContainer: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "rgba(0, 0, 0, 0.5)"
-    },
-    modalContent: {
-      backgroundColor: "white",
-      padding: 20,
-      borderRadius: 10,
-      alignItems: "center"
-    },
-    modalText: {
-      fontSize: 18,
-      fontWeight: "bold",
-      marginBottom: 20
-    },
-    modalButton: {
-      backgroundColor: "#0D98C0",
-      paddingVertical: 10,
-      paddingHorizontal: 15,
-      borderRadius: 5
-    },
-    modalButtonText: {
-      color: "white",
-      fontSize: 16,
-      fontWeight: "bold"
-    },
-    summaryContainer: {
-      borderRadius: 10,
-      alignItems: 'center',
-      backgroundColor: 'white',
-      padding: 15     
-    },
-    summary: {
-      marginHorizontal: '10%',
-    },
-    summaryScroll: {
-      height: '50%'
-    }
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  modalButton: {
+    backgroundColor: "#0D98C0",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+  },
+  modalButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  summaryContainer: {
+    borderRadius: 10,
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 15,
+  },
+  summary: {
+    marginHorizontal: "10%",
+  },
+  summaryScroll: {
+    height: "50%",
+  },
 });

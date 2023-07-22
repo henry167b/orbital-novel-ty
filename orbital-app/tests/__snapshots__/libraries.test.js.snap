@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Libraries /> can render 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "white",
+      "flex": 1,
+      "justifyContent": "flex-start",
+      "paddingHorizontal": 35,
+    }
+  }
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "white",
+          "elevation": 0,
+          "paddingHorizontal": 0,
+          "paddingTop": 60,
+          "zIndex": 0,
+        },
+        {},
+        {},
+      ]
+    }
+    testID="appbar-header-root-layer"
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "white",
+          "height": 64,
+          "shadowColor": "#000",
+          "shadowOffset": {
+            "height": 0,
+            "width": 0,
+          },
+          "shadowOpacity": 0,
+          "shadowRadius": 0,
+          "width": "100%",
+        }
+      }
+      testID="appbar-header-outer-layer"
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "white",
+            "flex": 1,
+            "flexDirection": "row",
+            "paddingBottom": undefined,
+            "paddingHorizontal": 4,
+            "paddingLeft": undefined,
+            "paddingRight": undefined,
+            "paddingTop": undefined,
+            "shadowColor": "#000",
+            "shadowOffset": {
+              "height": 0,
+              "width": 0,
+            },
+            "shadowOpacity": 0,
+            "shadowRadius": 0,
+          }
+        }
+        testID="appbar-header"
+      >
+        <View
+          style={
+            {
+              "width": 52,
+            }
+          }
+        />
+        <View
+          pointerEvents="box-none"
+          style={
+            [
+              {
+                "flex": 1,
+                "paddingHorizontal": 12,
+              },
+              {
+                "paddingHorizontal": 0,
+              },
+              [
+                false,
+                {
+                  "alignItems": "center",
+                },
+                undefined,
+              ],
+            ]
+          }
+          testID="appbar-content"
+        >
+          <Text
+            accessibilityRole="header"
+            accessibilityTraits="header"
+            accessible={true}
+            numberOfLines={1}
+            style={
+              [
+                {
+                  "fontFamily": "System",
+                  "fontSize": 22,
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                  "lineHeight": 28,
+                },
+                {
+                  "textAlign": "left",
+                },
+                {
+                  "color": "rgba(28, 27, 31, 1)",
+                  "writingDirection": "ltr",
+                },
+                [
+                  {
+                    "color": "rgba(28, 27, 31, 1)",
+                    "fontFamily": "System",
+                    "fontSize": 22,
+                    "fontWeight": "400",
+                    "letterSpacing": 0,
+                    "lineHeight": 28,
+                  },
+                  false,
+                  undefined,
+                ],
+              ]
+            }
+            testID="appbar-content-title-text"
+          >
+            Libraries
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "width": 52,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <RCTScrollView
+    data={[]}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onRefresh={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    refreshControl={
+      <RefreshControlMock
+        onRefresh={[Function]}
+        refreshing={false}
+      />
+    }
+    refreshing={false}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={[]}
+    style={
+      {
+        "width": "100%",
+      }
+    }
+    viewabilityConfigCallbackPairs={[]}
+  >
+    <RCTRefreshControl />
+    <View />
+  </RCTScrollView>
+</View>
+`;
