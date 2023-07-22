@@ -1,11 +1,9 @@
-import { useRouter, useFocusEffect } from "expo-router";
-import { Button, Appbar, Card, Text, SegmentedButtons } from "react-native-paper";
+import { useFocusEffect } from "expo-router";
+import { Button, Appbar, Text, SegmentedButtons } from "react-native-paper";
 import { View, StyleSheet, FlatList } from "react-native";
 import { useEffect, useState, useCallback } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { storeDefaults, getBooks, removeBook} from "../../async_storage/storage";
+import { getBooks, removeBook} from "../../async_storage/storage";
 import { RemoveFromWishlist } from "../../scrapers/wishlist_scraper";
-import { WebView } from "react-native-webview";
 import { LoanlistScraperWebView } from "../../scrapers/loanlist_scraper";
 import moment from "moment";
 import { SafeAreaProvider } from "react-native-safe-area-context";

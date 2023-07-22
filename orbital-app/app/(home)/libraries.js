@@ -1,21 +1,9 @@
-import {
-  FlatList,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  RefreshControl,
-  ScrollView,
-} from "react-native";
-import { Surface, Text, Card, Button, Appbar, Modal } from "react-native-paper";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, Card, Button, Appbar, Modal } from "react-native-paper";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState, useCallback, useRef } from "react";
-import {
-  storeDefaults,
-  getLibraries,
-  getBooks,
-} from "../../async_storage/storage";
+import { useEffect, useState, useCallback } from "react";
+import { getLibraries, getBooks } from "../../async_storage/storage";
 import { useFocusEffect } from "expo-router";
 
 function HomeBar() {

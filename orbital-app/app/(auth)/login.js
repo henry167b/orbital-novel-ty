@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Surface, Text, TextInput, Checkbox, Button, ActivityIndicator } from 'react-native-paper';
+import { Text, TextInput, Button, ActivityIndicator } from 'react-native-paper';
 import { useAuth } from "../../contexts/auth";
 import { WebView } from 'react-native-webview';
 import { clearRecentSearches } from '../../async_storage/storage';

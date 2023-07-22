@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { View } from "react-native";
-import { getTitleDetails } from "../nlb_api/nlb";
 import { WebView } from "react-native-webview";
 import { useAuth } from "../contexts/auth"
-import { addBook, addManyBooks } from "../async_storage/storage";
 
 export function LoanlistScraperWebView({setData, setShowWebView }) {
   const { user, password } = useAuth();

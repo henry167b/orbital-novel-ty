@@ -1,34 +1,10 @@
-import { useFocusEffect, useRouter } from "expo-router";
-import {
-  Button,
-  Appbar,
-  Surface,
-  Text,
-  TextInput,
-  Searchbar,
-  Divider,
-  Portal,
-  Modal as PaperModal,
-} from "react-native-paper";
-import {
-  Modal,
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { Text, Searchbar, Divider, Portal, Modal as PaperModal } from "react-native-paper";
+import { Modal, View, StyleSheet, FlatList, TouchableOpacity, ScrollView } from "react-native";
+import { useCallback, useEffect, useState } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import {
-  getAvailability,
-  search,
-  getTitleDetails,
-  getSummary,
-} from "../../nlb_api/nlb";
+import { search, getTitleDetails, getSummary } from "../../nlb_api/nlb";
 import { addBook } from "../../async_storage/storage";
-import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { Animated } from "react-native";
 import { addRecentSearch } from "../../async_storage/storage";
 import { getRecentSearches } from "../../async_storage/storage";
 import { AddToWishlist } from "../../scrapers/wishlist_scraper";

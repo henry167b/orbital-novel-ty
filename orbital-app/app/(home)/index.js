@@ -1,11 +1,9 @@
-import { useEffect, useCallback, useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { Appbar, Text, Button, Surface } from "react-native-paper";
+import { useEffect } from "react";
+import {  StyleSheet, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Appbar, Text, Button } from "react-native-paper";
 import { useAuth } from "../../contexts/auth";
-import { Link, Stack, useFocusEffect } from "expo-router";
-import { storeDefaults, hasDefaults } from "../../async_storage/storage";
-import { WebView } from "react-native-webview";
+import { storeDefaults } from "../../async_storage/storage";
 import { WishlistScraperWebView } from "../../scrapers/wishlist_scraper";
 import { EventScraperWebView } from "../../scrapers/events_scraper";
 
