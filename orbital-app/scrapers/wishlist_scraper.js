@@ -51,7 +51,7 @@ export function WishlistScraperWebView() {
     } else {
       setTimeout(() => {
         this.webref.injectJavaScript(injectParseScript);
-      }, 2000);
+      }, 100);
     }
   };
 
